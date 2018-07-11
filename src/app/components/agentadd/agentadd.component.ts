@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Agent } from "../../model/schema";
+import { Agent, Data } from "../../model/schema";
 import { Router } from "@angular/router";
 
 @Component({
-  selector: "app-Agentadd",
-  templateUrl: "./Agentadd.component.html",
-  styleUrls: ["./Agentadd.component.css"]
+  selector: "app-agentadd",
+  templateUrl: "./agentadd.component.html",
+  styleUrls: ["./agentadd.component.css"]
 })
 export class AgentaddComponent implements OnInit {
   processing = false;
@@ -82,10 +82,10 @@ export class AgentaddComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
+      // console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -154,15 +154,15 @@ export class AgentaddComponent implements OnInit {
   addAgent() {
     this.processing = true;
     this.model["function"] = "addAgent";
-    this.dbService.post(this.model).subscribe(data => {
-      if (data.status == "success") {
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
         this.form.reset();
       } else {
         this.processing = false;
-        if (data.status == "error") {
+        if (data.status === "error") {
           this.messageClass = "alert alert-danger";
           this.message = data.message;
           this.userInvalid = true;

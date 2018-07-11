@@ -43,17 +43,17 @@ export class ItemshowComponent implements OnInit {
   }
 
   getItem() {
-    this.dbService.get("item",this.id).subscribe(data => {
+    this.dbService.get("item", this.id).subscribe(data => {
       this.transaction = data[0];
     });
 
-    this.dbService.get("delivery",this.id).subscribe(data => {
+    this.dbService.get("delivery", this.id).subscribe((data: any) => {
       this.delivery = data;
     });
 
-    this.dbService.get("itemSale",this.id).subscribe(data => {
+    this.dbService.get("itemSale", this.id).subscribe(data => {
       this.transactions = data;
-    }); 
+    });
   }
 
   goBack() {
@@ -61,10 +61,9 @@ export class ItemshowComponent implements OnInit {
   }
 
   downLoadPDF() {
-    this.dbService.getPDF('pdf').subscribe(data => {
+    this.dbService.getPDF("pdf").subscribe(data => {
       this.getItemDetailsPDF(data["itemDetails"]);
     });
-
   }
 
   getItemDetailsPDF(img) {
@@ -74,12 +73,12 @@ export class ItemshowComponent implements OnInit {
     doc.setFontSize(12);
     doc.setFontStyle("Arial");
 
-    var date = "";
-    var itemName = this.transaction.name;
-    var stocks = this.transaction.stocks;
-    var model = this.transaction.model;
-    var Price = this.transaction.price;
-    var descripton = this.transaction.description;
+    const date = "";
+    const itemName = this.transaction.name;
+    const stocks = this.transaction.stocks;
+    const model = this.transaction.model;
+    const Price = this.transaction.price;
+    const descripton = this.transaction.description;
 
     doc.text(174, 53.5, date);
     doc.text(35, 52, itemName);
@@ -88,19 +87,19 @@ export class ItemshowComponent implements OnInit {
     doc.text(35, 67.7, Price);
     doc.text(35, 72.8, descripton);
 
-    var start = 95;
-    var space = 7;
+    let start = 95;
+    const space = 7;
 
-    for (var key in this.delivery) {
+    for (const key in this.delivery) {
       if (this.delivery.hasOwnProperty(key)) {
-        var element = this.delivery[key];
-        var deliveryDate = element.deliveryDate;
-        var batchNo = element.batch;
-        var serialNo = element.serialNo;
-        var referenceNo = element.refNo;
-        var chasisNo = element.chasis;
-        var engineNo = element.engine;
-        var supplier = element.supplier;
+        const element = this.delivery[key];
+        const deliveryDate = element.deliveryDate;
+        const batchNo = element.batch;
+        const serialNo = element.serialNo;
+        const referenceNo = element.refNo;
+        const chasisNo = element.chasis;
+        const engineNo = element.engine;
+        const supplier = element.supplier;
 
         doc.text(12, start, deliveryDate);
         doc.text(42, start, batchNo);

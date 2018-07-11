@@ -3,6 +3,7 @@ import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Global } from "../../modules/global";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-paymentadd",
@@ -21,7 +22,7 @@ export class PaymentaddComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private formbuilder: FormBuilder,
-    public global : Global,
+    public global: Global,
     private router: Router
   ) {
     this.createForm();
@@ -44,7 +45,7 @@ export class PaymentaddComponent implements OnInit {
     this.model = fields;
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -80,10 +81,9 @@ export class PaymentaddComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -169,20 +169,17 @@ export class PaymentaddComponent implements OnInit {
     this.form.controls["recieved"].enable();
   }
   searchDR() {
-    var id = this.model.drNumber;
-    //console.log(id);
-    this.dbService.get("dr",id).subscribe(data => {
-      //console.log(data);
-      if (data.status == "error") {
+    const id = this.model.drNumber;
+
+    this.dbService.get("dr", id).subscribe((data: Data) => {
+      if (data.status === "error") {
         this.messageClass = "alert alert-danger";
         this.message = data.message;
         setTimeout(() => {
           this.messageClass = "";
           this.message = "";
         }, 3000);
-      }
-
-      else {
+      } else {
         this.messageClass = "";
         this.message = "";
         this.form.controls["drNumber"].disable();
@@ -199,7 +196,7 @@ export class PaymentaddComponent implements OnInit {
 
   addPayment() {
     const data = {
-      function : "addDR",
+      function: "addDR",
       drNumber: this.model.drNumber,
       drDate: this.model.paymentDate,
       amount: this.model.amount,
@@ -207,10 +204,10 @@ export class PaymentaddComponent implements OnInit {
       recieved: this.model.recieved
     };
 
-    this.dbService.post(data).subscribe(data => {
-      if (data.status == "error") {
+    this.dbService.post(data).subscribe((res: Data) => {
+      if (res.status === "error") {
         this.messageClass = "alert alert-danger";
-        this.message = data.message;
+        this.message = res.message;
         setTimeout(() => {
           this.messageClass = "";
           this.message = "";
@@ -218,7 +215,7 @@ export class PaymentaddComponent implements OnInit {
       } else {
         this.global.getPayments();
         this.messageClass = "alert alert-success";
-        this.message = data.message;
+        this.message = res.message;
         this.Clear();
         this.model.client = "";
         this.model.agent = "";
@@ -231,6 +228,5 @@ export class PaymentaddComponent implements OnInit {
         }, 2000);
       }
     });
-    
   }
 }

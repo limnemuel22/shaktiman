@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-discountedit",
@@ -26,7 +27,7 @@ export class DiscounteditComponent implements OnInit {
     this.model = this.modelScheme();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   modelScheme() {
     const val = {
@@ -89,10 +90,10 @@ export class DiscounteditComponent implements OnInit {
   }
 
   updateDiscount() {
-    this.model['function'] = "updateDiscount";
-    this.dbService.post(this.model).subscribe(data => {
-      //console.log(data);
-      if (data.status == "success") {
+    this.model["function"] = "updateDiscount";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      // console.log(data);
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Delivery } from "../../model/schema";
+import { Data } from "../../model/schema";
 import { Global } from "../../modules/global";
 
 @Component({
@@ -30,7 +30,7 @@ export class DeliveryComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private formbuilder: FormBuilder,
-    public global : Global,
+    public global: Global,
     private router: Router
   ) {
     this.createForm();
@@ -153,10 +153,10 @@ export class DeliveryComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
+      // console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -187,7 +187,7 @@ export class DeliveryComponent implements OnInit {
   }
 
   loadData() {
-    this.dbService.get("itemsName").subscribe(data => {
+    this.dbService.get("itemsName").subscribe((data: any) => {
       this.itemList = data;
     });
   }
@@ -197,31 +197,30 @@ export class DeliveryComponent implements OnInit {
   }
 
   filterByItem() {
-    //console.log(this.itemList);
     if (this.model.item !== "") {
       this.itemNameList = [];
-      //console.log(this.model.item);
-      for (var key in this.itemList) {
+
+      for (const key in this.itemList) {
         if (this.itemList.hasOwnProperty(key)) {
-          var element = this.itemList[key].name;
+          const element = this.itemList[key].name;
 
           if (
             element.toLowerCase().substr(0, this.model.item.length) ===
             this.model.item.toLowerCase()
           ) {
-            var duplicate = false;
+            let duplicate = false;
 
-            for (var key in this.itemNameList) {
-              if (this.itemNameList.hasOwnProperty(key)) {
-                var el = this.itemNameList[key];
-                if (el == element) {
+            for (const k in this.itemNameList) {
+              if (this.itemNameList.hasOwnProperty(k)) {
+                const el = this.itemNameList[k];
+                if (el === element) {
                   duplicate = true;
                 }
               } else {
                 duplicate = false;
               }
             }
-            if (duplicate == false) {
+            if (duplicate === false) {
               this.itemNameList.push(element);
             }
           }
@@ -234,13 +233,9 @@ export class DeliveryComponent implements OnInit {
 
   addDelivery() {
     this.processing = true;
-    this.model['function'] = "addDelivery";
-    console.log(this.model);
-    
-    this.dbService.post(this.model).subscribe(data => {
-      console.log(data);
-      
-      if (data.status == "success") {
+    this.model["function"] = "addDelivery";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      if (data.status === "success") {
         alert(this.model.item + " is successfully added!");
         this.processing = false;
         this.form.reset();

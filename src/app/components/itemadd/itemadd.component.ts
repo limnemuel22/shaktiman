@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Item } from "../../model/schema";
+import { Item, Data } from "../../model/schema";
 
 @Component({
   selector: "app-itemadd",
@@ -24,7 +24,7 @@ export class ItemaddComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -115,9 +115,9 @@ export class ItemaddComponent implements OnInit {
 
   addItem() {
     this.processing = true;
-    this.model['function'] = "addItem";
-    this.dbService.post(this.model).subscribe(data => {
-      if (data.status == "success") {
+    this.model["function"] = "addItem";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
@@ -135,6 +135,5 @@ export class ItemaddComponent implements OnInit {
         }, 3000);
       }
     });
-
   }
 }

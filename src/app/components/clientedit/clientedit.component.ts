@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { DatabaseService } from "../../services/database.service";
 import { Client } from "../../model/schema";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-clientedit",
@@ -26,7 +27,7 @@ export class ClienteditComponent implements OnInit {
     this.getClient();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -69,10 +70,10 @@ export class ClienteditComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
+      // console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -135,9 +136,11 @@ export class ClienteditComponent implements OnInit {
   }
 
   getClient() {
-    this.dbService.get("client", this.route.snapshot.params["id"]).subscribe(data => {
-      this.model = data[0];
-    });
+    this.dbService
+      .get("client", this.route.snapshot.params["id"])
+      .subscribe((data: Data) => {
+        this.model = data[0];
+      });
   }
 
   goBack() {
@@ -145,9 +148,9 @@ export class ClienteditComponent implements OnInit {
   }
 
   updateClient() {
-    this.model['function'] = "updateClient";
-    this.dbService.post(this.model).subscribe(data => {
-      if (data.status == "success") {
+    this.model["function"] = "updateClient";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;

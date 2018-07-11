@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { DatabaseService } from "../../services/database.service";
-import { Agent } from "../../model/schema";
+import { Agent, Data } from "../../model/schema";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -73,10 +73,9 @@ export class AgenteditComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -139,19 +138,21 @@ export class AgenteditComponent implements OnInit {
   }
 
   getAgent() {
-    this.dbService.get("agent",this.route.snapshot.params["id"]).subscribe(data => {
-      this.model = data[0];
-    });
+    this.dbService
+      .get("agent", this.route.snapshot.params["id"])
+      .subscribe(data => {
+        this.model = data[0];
+      });
   }
-  
+
   goBack() {
     this.router.navigate(["/admin/agent/agent-list"]);
   }
 
   updateAgent() {
-    this.model['function'] = "updateAgent";
-    this.dbService.post(this.model).subscribe(data => {
-      if (data.status == "success") {
+    this.model["function"] = "updateAgent";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;

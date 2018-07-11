@@ -1,7 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { DatabaseService } from "../../services/database.service";
-import { User } from "../../model/schema";
+import { User, Data } from "../../model/schema";
 import { Router } from "@angular/router";
 import { AuthGuard } from "../../guards/auth.guard";
 import { Global } from "../../modules/global";
@@ -26,13 +31,12 @@ export class LoginComponent implements OnInit {
     public global: Global,
     private authGuard: AuthGuard
   ) {
-    this.dbService.loggedIn().subscribe(data => { 
-      
-     if(!data){
-      this.isLogin = false;
-     } else {
-      this.router.navigate(['admin']);
-     }
+    this.dbService.loggedIn().subscribe(data => {
+      if (!data) {
+        this.isLogin = false;
+      } else {
+        this.router.navigate(["admin"]);
+      }
     });
 
     this.createForm();
@@ -42,7 +46,7 @@ export class LoginComponent implements OnInit {
     };
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -100,10 +104,9 @@ export class LoginComponent implements OnInit {
   onLoginSubmit() {
     this.processing = true;
     this.disableForm();
-    this.data['function'] = "userLogin";
-    this.dbService.userLogin(this.data).subscribe(data => {
-    
-      if (data.status == "error") {
+    this.data["function"] = "userLogin";
+    this.dbService.userLogin(this.data).subscribe((data: any) => {
+      if (data.status === "error") {
         this.messageClass = "alert alert-danger";
         this.message = data.message;
         this.processing = false;

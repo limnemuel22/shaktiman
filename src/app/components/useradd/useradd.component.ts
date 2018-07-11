@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { User } from "../../model/schema";
+import { User, Data } from "../../model/schema";
 import { Router } from "@angular/router";
 
 @Component({
@@ -91,10 +91,10 @@ export class UseraddComponent implements OnInit {
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
-      //console.log(value[2])
+      // console.log(value[2])
       if (
-        ((value[0] == "02" && value[1] == "31") ||
-          (value[0] == "02" && value[1] == "30")) &&
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
         Number(value[2]) > 1900
       ) {
         return { validateDate: true };
@@ -155,17 +155,17 @@ export class UseraddComponent implements OnInit {
   addUser() {
     this.processing = true;
     this.model.usertype = this.usertype;
-    this.model['function'] = "addUser";
-    this.dbService.post(this.model).subscribe(data => {
-      //console.log(data);
-      if (data.status == "success") {
+    this.model["function"] = "addUser";
+    this.dbService.post(this.model).subscribe((data: Data) => {
+      // console.log(data);
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
         this.form.reset();
       } else {
         this.processing = false;
-        if (data.status == "error") {
+        if (data.status === "error") {
           this.messageClass = "alert alert-danger";
           this.message = data.message;
           this.userInvalid = true;

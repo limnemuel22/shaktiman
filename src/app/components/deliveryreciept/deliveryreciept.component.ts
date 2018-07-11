@@ -1,8 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
-import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl
+} from "@angular/forms";
 import { Router } from "@angular/router";
-import { Purchase } from "../../model/schema";
+import { Purchase, Data } from "../../model/schema";
 import { Global } from "../../modules/global";
 
 @Component({
@@ -39,8 +44,7 @@ export class DeliveryrecieptComponent implements OnInit {
   comments;
   picker;
 
-  //model = new Purchase();
-  model;
+  model = new Purchase();
 
   nameClient;
   clientAddress: string;
@@ -66,7 +70,6 @@ export class DeliveryrecieptComponent implements OnInit {
     this.checkCart();
     this.form.controls["serialNo"].disable();
     this.form.controls["quantity"].disable();
-
   }
 
   ngOnInit() {
@@ -85,16 +88,28 @@ export class DeliveryrecieptComponent implements OnInit {
   }
 
   createForm() {
-    this.form = this.formbuilder.group({
-      client: ["",Validators.compose([Validators.required, this.validateLetters])],
-      agent: ["",Validators.compose([Validators.required,this.validateLetters])],
-      approved:  ["",Validators.compose([Validators.required,this.validateLetters])],
-      itemName: [""],
-      quantity: ["", Validators.compose([this.validateNumbers])],
-      serialNo:[""],
-      comments: [""],
-      date: ['', Validators.compose([Validators.required])],
-    }, { updateOn: 'blur' });
+    this.form = this.formbuilder.group(
+      {
+        client: [
+          "",
+          Validators.compose([Validators.required, this.validateLetters])
+        ],
+        agent: [
+          "",
+          Validators.compose([Validators.required, this.validateLetters])
+        ],
+        approved: [
+          "",
+          Validators.compose([Validators.required, this.validateLetters])
+        ],
+        itemName: [""],
+        quantity: ["", Validators.compose([this.validateNumbers])],
+        serialNo: [""],
+        comments: [""],
+        date: ["", Validators.compose([Validators.required])]
+      },
+      { updateOn: "blur" }
+    );
   }
 
   validateLetters(controls) {
@@ -124,10 +139,9 @@ export class DeliveryrecieptComponent implements OnInit {
     }
   }
 
-
   loadData() {
-    this.dbService.get("purchaseData").subscribe(data => {
-      for (let i of data) {
+    this.dbService.get("purchaseData").subscribe((data: any) => {
+      for (const i of data) {
         if (i["agentName"]) {
           this.agentName.push(i["agentName"]);
           this.agent.push(i);
@@ -143,67 +157,80 @@ export class DeliveryrecieptComponent implements OnInit {
       this.loadAgent();
       this.loadClient();
 
-      this.approved = localStorage.getItem("approved") != 'undefined' && localStorage.getItem("approved") != null ? localStorage.getItem("approved") : "";
-      this.form.controls['approved'].setErrors(null);
+      this.approved =
+        localStorage.getItem("approved") !== "undefined" &&
+        localStorage.getItem("approved") !== null
+          ? localStorage.getItem("approved")
+          : "";
+      this.form.controls["approved"].setErrors(null);
     });
 
-    this.dbService.get("itemsData").subscribe(data => {
+    this.dbService.get("itemsData").subscribe((data: any) => {
       this.itemList = data;
     });
-
   }
 
   loadAgent() {
     let agent = this.people();
-    if (localStorage.getItem("agent") != 'undefined' && localStorage.getItem("agent") != null) {
-      agent = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem("agent"))));
+    if (
+      localStorage.getItem("agent") !== "undefined" &&
+      localStorage.getItem("agent") !== null
+    ) {
+      agent = JSON.parse(
+        JSON.parse(JSON.stringify(localStorage.getItem("agent")))
+      );
     }
 
     this.model.agent = agent.name;
     this.agentAddress = agent.address;
     this.agentContact = agent.contact;
-    this.form.controls['agent'].setErrors(null);
+    this.form.controls["agent"].setErrors(null);
   }
 
   loadClient() {
     let client = this.people();
-    if (localStorage.getItem("client") != 'undefined' && localStorage.getItem("client") != null) {
-      client = JSON.parse(JSON.parse(JSON.stringify(localStorage.getItem("client"))));
+    if (
+      localStorage.getItem("client") !== "undefined" &&
+      localStorage.getItem("client") !== null
+    ) {
+      client = JSON.parse(
+        JSON.parse(JSON.stringify(localStorage.getItem("client")))
+      );
     }
     this.model.client = client.name;
     this.clientAddress = client.address;
     this.clientContact = client.contact;
-    this.form.controls['client'].setErrors(null);
+    this.form.controls["client"].setErrors(null);
   }
 
-  people(){
-    return {name: '',address: '',contact: ''};
+  people() {
+    return { name: "", address: "", contact: "" };
   }
 
   filterByItem() {
     if (this.itemName !== "") {
       this.itemClick = false;
-      for (var key in this.itemList) {
+      for (const key in this.itemList) {
         if (this.itemList.hasOwnProperty(key)) {
-          var element = this.itemList[key].name;
+          const element = this.itemList[key].name;
           this.serialNoList = [];
           if (
             element.toLowerCase().substr(0, this.itemName.length) ===
             this.itemName.toLowerCase()
           ) {
-            var duplicate = false;
+            let duplicate = false;
 
-            for (var key in this.itemNameList) {
-              if (this.itemNameList.hasOwnProperty(key)) {
-                var el = this.itemNameList[key];
-                if (el == element) {
+            for (const k in this.itemNameList) {
+              if (this.itemNameList.hasOwnProperty(k)) {
+                const el = this.itemNameList[k];
+                if (el === element) {
                   duplicate = true;
                 }
               } else {
                 duplicate = false;
               }
             }
-            if (duplicate == false) {
+            if (duplicate === false) {
               this.itemNameList.push(element);
             }
           }
@@ -216,54 +243,58 @@ export class DeliveryrecieptComponent implements OnInit {
 
   filterBySerial() {
     this.serialNoList = [];
-    //console.log(this.itemName);
-    if (this.serialNo !== "") {
-      //console.log(this.serialNo);
-      for (var key in this.itemList) {
-        if (this.itemList.hasOwnProperty(key)) {
-          var name = this.itemList[key].name;
 
-          if (name == this.itemName) {
-            var element = this.itemList[key].serialNo;
-            //console.log(element);
+    if (this.serialNo !== "") {
+      for (const key in this.itemList) {
+        if (this.itemList.hasOwnProperty(key)) {
+          const name = this.itemList[key].name;
+
+          if (name === this.itemName) {
+            const element = this.itemList[key].serialNo;
+
             if (
               element.toLowerCase().substr(0, this.serialNo.length) ===
               this.serialNo.toLowerCase()
             ) {
               this.serialNoList.push(element);
-              //console.log( this.itemNameList);
             }
           }
         }
       }
-    } else {
-      //this.itemNameList = [];
     }
-    //console.log(this.itemNameList);
   }
 
   filterByClient() {
-    var name;
-    if (localStorage.getItem("client") != 'undefined' && localStorage.getItem("client") != null) {
+    let name;
+    if (
+      localStorage.getItem("client") !== "undefined" &&
+      localStorage.getItem("client") !== null
+    ) {
       name = JSON.parse(localStorage["client"]);
       name.name = this.model.client;
     }
     this.clientList = [];
-    
+
     if (this.model.client !== "") {
-      for (var key in this.clientName) {
+      for (const key in this.clientName) {
         if (this.clientName.hasOwnProperty(key)) {
-          var element = this.clientName[key];
-          if (element.toLowerCase().substr(0, this.model.client.length) === this.model.client.toLowerCase()) {
+          const element = this.clientName[key];
+          if (
+            element.toLowerCase().substr(0, this.model.client.length) ===
+            this.model.client.toLowerCase()
+          ) {
             this.clientList.push(element);
-            if (this.clientName[key] == this.model.client) {
+            if (this.clientName[key] === this.model.client) {
               this.clientAddress = this.client[key].clientAddress;
               this.clientContact = this.client[key].clientContact;
             }
           } else {
             this.clientAddress = "";
             this.clientContact = "";
-            if (localStorage.getItem("client") != null && localStorage.getItem("client") != 'undefined') {
+            if (
+              localStorage.getItem("client") !== null &&
+              localStorage.getItem("client") !== "undefined"
+            ) {
               name.contact = "";
               name.address = "";
             } else {
@@ -276,7 +307,10 @@ export class DeliveryrecieptComponent implements OnInit {
       this.clientAddress = "";
       this.clientContact = "";
 
-      if (localStorage.getItem("client") != null && localStorage.getItem("client") != 'undefined') {
+      if (
+        localStorage.getItem("client") !== null &&
+        localStorage.getItem("client") !== "undefined"
+      ) {
         name.contact = "";
         name.address = "";
       } else {
@@ -285,29 +319,30 @@ export class DeliveryrecieptComponent implements OnInit {
     }
 
     localStorage.setItem("client", JSON.stringify(name));
-    //console.log(this.clientList);
   }
 
   filterByAgent() {
-    var name;
-    //console.log(localStorage.getItem("agent"));
-    if (localStorage.getItem("agent") != 'undefined' && localStorage.getItem("agent") != null) {
+    let name;
+
+    if (
+      localStorage.getItem("agent") !== "undefined" &&
+      localStorage.getItem("agent") !== null
+    ) {
       name = JSON.parse(localStorage["agent"]);
       name.name = this.model.agent;
     }
     this.agentList = [];
     if (this.model.agent !== "") {
-      //console.log(this.agentName);
-      for (var key in this.agentName) {
+      for (const key in this.agentName) {
         if (this.agentName.hasOwnProperty(key)) {
-          var element = this.agentName[key];
-          //console.log(element.toLowerCase().substr(0,this.model.client.length) === this.model.client.toLowerCase());
+          const element = this.agentName[key];
+
           if (
             element.toLowerCase().substr(0, this.model.agent.length) ===
             this.model.agent.toLowerCase()
           ) {
             this.agentList.push(element);
-            if (this.agentName[key] == this.model.agent) {
+            if (this.agentName[key] === this.model.agent) {
               this.agentAddress = this.agent[key].agentAddress;
               this.agentContact = this.agent[key].agentContact;
             }
@@ -316,9 +351,9 @@ export class DeliveryrecieptComponent implements OnInit {
             this.agentContact = "";
 
             if (
-              localStorage.getItem("agent") != null &&
-              localStorage.getItem("agent") != "" &&
-              localStorage.getItem("agent") != undefined
+              localStorage.getItem("agent") !== null &&
+              localStorage.getItem("agent") !== "" &&
+              localStorage.getItem("agent") !== undefined
             ) {
               name.contact = "";
               name.address = "";
@@ -333,9 +368,9 @@ export class DeliveryrecieptComponent implements OnInit {
       this.agentContact = "";
 
       if (
-        localStorage.getItem("agent") != null &&
-        localStorage.getItem("agent") != "" &&
-        localStorage.getItem("agent") != undefined
+        localStorage.getItem("agent") !== null &&
+        localStorage.getItem("agent") !== "" &&
+        localStorage.getItem("agent") !== undefined
       ) {
         name.contact = "";
         name.address = "";
@@ -345,16 +380,16 @@ export class DeliveryrecieptComponent implements OnInit {
     }
 
     localStorage.setItem("agent", JSON.stringify(name));
-    //console.log(this.agentList);
+    // console.log(this.agentList);
   }
   select(item, action) {
-    if (action == "client") {
+    if (action === "client") {
       this.model.client = item;
-      for (var key in this.client) {
+      for (const key in this.client) {
         if (this.client.hasOwnProperty(key)) {
-          var element = this.client[key].clientName;
+          const element = this.client[key].clientName;
 
-          if (element == item) {
+          if (element === item) {
             this.clientAddress = this.client[key].clientAddress;
             this.clientContact = this.client[key].clientContact;
 
@@ -371,13 +406,13 @@ export class DeliveryrecieptComponent implements OnInit {
       }
     }
 
-    if (action == "agent") {
+    if (action === "agent") {
       this.model.agent = item;
-      for (var key in this.client) {
+      for (const key in this.client) {
         if (this.agent.hasOwnProperty(key)) {
-          var element = this.agent[key].agentName;
+          const element = this.agent[key].agentName;
 
-          if (element == item) {
+          if (element === item) {
             this.agentAddress = this.agent[key].agentAddress;
             this.agentContact = this.agent[key].agentContact;
 
@@ -394,31 +429,31 @@ export class DeliveryrecieptComponent implements OnInit {
       }
     }
 
-    if (action == "item") {
+    if (action === "item") {
       this.clear();
       this.itemName = item;
       this.serialNoList = [];
-      for (var key in this.itemList) {
+      for (const key in this.itemList) {
         if (this.itemList.hasOwnProperty(key)) {
-          var element = this.itemList[key].name;
-          if (element == this.itemName) {
+          const element = this.itemList[key].name;
+          if (element === this.itemName) {
             this.serialNoList.push(this.itemList[key].serialNo);
             this.form.controls["serialNo"].enable();
           }
         }
       }
-      var duplicate: any = [];
-      var arr = this.serialNoList.filter(function (el) {
+      const duplicate: any = [];
+      const arr = this.serialNoList.filter(function(el) {
         // If it is not a duplicate, return true
-        if (duplicate.indexOf(el) == -1) {
+        if (duplicate.indexOf(el) === -1) {
           duplicate.push(el);
         }
       });
       this.serialNoList = duplicate;
-      //console.log(this.serialNoList);
+      // console.log(this.serialNoList);
     }
 
-    if (action == "serial") {
+    if (action === "serial") {
       this.serialNo = item;
       this.hasQuantity = true;
       this.form.controls["quantity"].enable();
@@ -449,7 +484,7 @@ export class DeliveryrecieptComponent implements OnInit {
           } else {
             this.messageClassItem = "";
             this.messageItem = "";
-            if (this.checkSerial(this.serialNo) == false) {
+            if (this.checkSerial(this.serialNo) === false) {
               if (this.quantity > 0) {
                 const val = {
                   serial: this.serialNo
@@ -458,13 +493,12 @@ export class DeliveryrecieptComponent implements OnInit {
                   function: "itemDR",
                   serial: this.serialNo,
                   quantity: this.quantity
-                }
+                };
 
-                this.dbService.post(data).subscribe(data => {
-                  //console.log(data);
-                  if (data.status == "error") {
+                this.dbService.post(data).subscribe((res: Data) => {
+                  if (res.status === "error") {
                     this.messageClassItem = "alert alert-danger";
-                    this.messageItem = data.message;
+                    this.messageItem = res.message;
                   } else {
                     this.addCart(data);
                     this.loadCart();
@@ -476,7 +510,6 @@ export class DeliveryrecieptComponent implements OnInit {
                     this.form.controls["quantity"].disable();
                   }
                 });
-
               } else {
                 this.messageClassItem = "alert alert-danger";
                 this.messageItem = "Quantity can't be zero!";
@@ -492,12 +525,12 @@ export class DeliveryrecieptComponent implements OnInit {
   }
 
   checkSerial(serial) {
-    var items = this.items;
-    var val = false;
-    for (var key in items) {
+    const items = this.items;
+    let val = false;
+    for (const key in items) {
       if (items.hasOwnProperty(key)) {
-        var element = items[key];
-        if (serial == element.serial) {
+        const element = items[key];
+        if (serial === element.serial) {
           val = true;
         }
       }
@@ -507,7 +540,7 @@ export class DeliveryrecieptComponent implements OnInit {
   }
 
   addCart(object) {
-    var totalPrice = Number(object[0].price) * Number(object[0].quantity);
+    const totalPrice = Number(object[0].price) * Number(object[0].quantity);
 
     const cart = {
       id: object[0].id,
@@ -522,7 +555,7 @@ export class DeliveryrecieptComponent implements OnInit {
       chasis: object[0].chasis,
       serial: object[0].serialNo
     };
-    if (this.items == undefined || this.items == "null") {
+    if (this.items === undefined || this.items === "null") {
       this.items = [cart];
     } else {
       this.items.push(cart);
@@ -534,19 +567,18 @@ export class DeliveryrecieptComponent implements OnInit {
     let sum = 0;
 
     Object.entries(this.items).forEach(([key, value]) => {
-      sum += Number(value['total'].replace(/,/g, "").split(".")[0]);
+      sum += Number(value["total"].replace(/,/g, "").split(".")[0]);
     });
-    //console.log(sum);
+
     this.total = sum.toLocaleString("en-us", { minimumFractionDigits: 2 });
     this.price = sum;
   }
 
   deleteItem(serial) {
     // removes ITEM on CART
-    for (var key in this.items) {
+    for (const key in this.items) {
       if (this.items.hasOwnProperty(key)) {
-        if (this.items[key].serialNo == serial) {
-          //this.items.splice(key,1);
+        if (this.items[key].serialNo === serial) {
           this.items.splice(this.items.indexOf(key), 1);
           break;
         }
@@ -563,7 +595,7 @@ export class DeliveryrecieptComponent implements OnInit {
 
   loadCart() {
     const jsonCart = localStorage.getItem("cart");
-    var value = jsonCart != null ? JSON.parse(jsonCart) : [];
+    const value = jsonCart !== null ? JSON.parse(jsonCart) : [];
     this.items = value;
     this.computeTotal();
   }
@@ -573,7 +605,6 @@ export class DeliveryrecieptComponent implements OnInit {
   }
 
   clearCart() {
-    //clears all ITEMS in the CART selected
     this.items = [];
     this.saveCart(this.items);
   }
@@ -586,11 +617,9 @@ export class DeliveryrecieptComponent implements OnInit {
     this.loadAgent();
     this.loadCart();
     this.loadClient();
-    //this.hasItem = false;
-    //this.router.navigate(['/admin'])
   }
 
-  updateApproved(){
+  updateApproved() {
     localStorage.setItem("approved", this.approved);
   }
 
@@ -599,20 +628,21 @@ export class DeliveryrecieptComponent implements OnInit {
     const clientJson = localStorage.getItem("client");
     const agentJson = localStorage.getItem("agent");
     const idJson = localStorage.getItem("id");
-    var client = clientJson != null ? JSON.parse(clientJson) : [];
-    var agent = agentJson != null ? JSON.parse(agentJson) : [];
-    var processedBy = idJson != null ? JSON.parse(idJson) : [];
-    var drItems = "";
-    for (var key in this.items) {
+    const client = clientJson !== null ? JSON.parse(clientJson) : [];
+    const agent = agentJson !== null ? JSON.parse(agentJson) : [];
+    const processedBy = idJson !== null ? JSON.parse(idJson) : [];
+    let drItems = "";
+    for (const key in this.items) {
       if (this.items.hasOwnProperty(key)) {
-        var id = this.items[key].id;
-        var item = this.items[key].item;
-        var qty = this.items[key].quantity;
+        const id = this.items[key].id;
+        const item = this.items[key].item;
+        const qty = this.items[key].quantity;
         drItems += id + "," + item + "," + qty + "-";
       }
     }
-    let date = new Date(this.model.date);
-    let ndate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    const date = new Date(this.model.date);
+    const ndate =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     const info = {
       function: "addPurchase",
       agent: agent.id,
@@ -625,9 +655,8 @@ export class DeliveryrecieptComponent implements OnInit {
       date: ndate
     };
 
-
-    this.dbService.post(info).subscribe(data => {
-      if (data.status == "success") {
+    this.dbService.post(info).subscribe((data: Data) => {
+      if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         setTimeout(() => {
@@ -647,7 +676,7 @@ export class DeliveryrecieptComponent implements OnInit {
   checkCart() {
     this.loadCart();
 
-    if (this.items == null || this.items.length == 0) {
+    if (this.items === null || this.items.length === 0) {
       this.hasItem = true;
     } else {
       this.hasItem = false;
@@ -656,8 +685,8 @@ export class DeliveryrecieptComponent implements OnInit {
 
   checkQuantity() {
     if (
-      this.form.controls["quantity"].value == "" ||
-      this.form.controls["quantity"].value == undefined
+      this.form.controls["quantity"].value === "" ||
+      this.form.controls["quantity"].value === undefined
     ) {
       this.hasQuantity = true;
     } else if (this.form.controls["quantity"].value.length > 0) {

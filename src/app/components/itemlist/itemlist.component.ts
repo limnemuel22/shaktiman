@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as jsPDF from "jspdf";
-import { forEach } from "@angular/router/src/utils/collection";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { Router } from "@angular/router";
+import { Data } from "../../model/schema";
+import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
 
 @Component({
   selector: "app-itemlist",
@@ -29,7 +29,15 @@ export class ItemlistComponent implements OnInit {
   panelOpenState = false;
   hasLoaded = false;
   dataSource;
-  displayedColumns = ['no', 'name', 'stocks', 'price','itemcode', 'description', 'action'];
+  displayedColumns = [
+    "no",
+    "name",
+    "stocks",
+    "price",
+    "itemcode",
+    "description",
+    "action"
+  ];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   applyFilter(filterValue: string) {
@@ -45,19 +53,19 @@ export class ItemlistComponent implements OnInit {
     private formbuilder: FormBuilder
   ) {
     this.createForm();
-    this.items = this.global.items == null ? null : this.global.items;
-    var getitems = setInterval(() => {
-      this.items = this.global.items == null ? null : this.global.items;
+    this.items = this.global.items === null ? null : this.global.items;
+    const getitems = setInterval(() => {
+      this.items = this.global.items === null ? null : this.global.items;
       this.dataSource = new MatTableDataSource(this.items);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.router.url != "/admin/item/item-list" ? clearInterval(getitems) : null;
+      if (this.router.url !== "/admin/item/item-list") {
+        clearInterval(getitems);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-    this.caption;
-  }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -66,19 +74,19 @@ export class ItemlistComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "name") {
+    if (filter === "name") {
       this.filterby = "Item Name";
     }
 
-    if (filter == "price") {
+    if (filter === "price") {
       this.filterby = "Price";
     }
 
-    if (filter == "itemcode") {
+    if (filter === "itemcode") {
       this.filterby = "Item Code";
     }
 
-    if (filter == "stocks") {
+    if (filter === "stocks") {
       this.filterby = "Stocks";
     }
 
@@ -87,7 +95,7 @@ export class ItemlistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -99,13 +107,13 @@ export class ItemlistComponent implements OnInit {
         value: this.search,
         function: "searchAll",
         field: this.field,
-        table:"item"
+        table: "item"
       };
-      //console.log(input);
-      this.dbService.post(input).subscribe(data => {
+      // console.log(input);
+      this.dbService.post(input).subscribe((data: Data) => {
         console.log(data);
         if (data.status !== "error") {
-          //console.log(this.transactions);
+          // console.log(this.transactions);
           this.items = this.global.items = data;
         } else {
           this.messageClass = "alert alert-danger";
@@ -120,7 +128,7 @@ export class ItemlistComponent implements OnInit {
   }
 
   downLoadPDF() {
-    this.dbService.getPDF('pdf').subscribe(data => {
+    this.dbService.getPDF("pdf").subscribe(data => {
       this.getItemListPDF(data["itemList"]);
     });
   }
@@ -131,20 +139,18 @@ export class ItemlistComponent implements OnInit {
     doc.setFontSize(11);
     doc.setFontStyle("Arial");
 
-    var itemName;
-    var stocks;
-    var price;
-    var itemCode;
-    var description;
-    var start = 65;
-    var spacing = 5;
-    var count = 0;
-    var pageHeight = doc.internal.pageSize.height;
-    //console.log(this.transactions);
-
-    for (var key in this.items) {
+    let itemName;
+    let stocks;
+    let price;
+    let itemCode;
+    let description;
+    let start = 65;
+    const spacing = 5;
+    let count = 0;
+    const pageHeight = doc.internal.pageSize.height;
+    for (const key in this.items) {
       if (this.items.hasOwnProperty(key)) {
-        var element = this.items[key];
+        const element = this.items[key];
         itemName = element.name;
         stocks = element.stocks;
         price = element.price;
@@ -152,20 +158,20 @@ export class ItemlistComponent implements OnInit {
         description = element.description;
         count++;
 
-        var chunks: string[] = [];
-        var itemstart = start;
-        var num = 24;
-        var space = 4;
+        let chunks: string[] = [];
+        let itemstart = start;
+        let num = 24;
+        const space = 4;
 
         for (
-          var i = 0, charsLength = itemName.length;
+          let i = 0, charsLength = itemName.length;
           i < charsLength;
           i += num
         ) {
           chunks.push(itemName.substring(i, i + num));
         }
 
-        for (var i = 0; i < chunks.length; i += 1) {
+        for (let i = 0; i < chunks.length; i += 1) {
           doc.text(18, itemstart, chunks[i]);
           itemstart += space;
         }
@@ -175,14 +181,14 @@ export class ItemlistComponent implements OnInit {
         num = 9;
 
         for (
-          var i = 0, charsLength = itemCode.length;
+          let i = 0, charsLength = itemCode.length;
           i < charsLength;
           i += num
         ) {
           chunks.push(itemCode.substring(i, i + num));
         }
 
-        for (var i = 0; i < chunks.length; i += 1) {
+        for (let i = 0; i < chunks.length; i += 1) {
           doc.text(107, itemstart, chunks[i]);
           itemstart += space;
         }
@@ -192,19 +198,18 @@ export class ItemlistComponent implements OnInit {
         num = 35;
 
         for (
-          var i = 0, charsLength = description.length;
+          let i = 0, charsLength = description.length;
           i < charsLength;
           i += num
         ) {
           chunks.push(description.substring(i, i + num));
         }
 
-        for (var i = 0; i < chunks.length; i += 1) {
+        for (let i = 0; i < chunks.length; i += 1) {
           doc.text(136, itemstart, chunks[i]);
           itemstart += space;
         }
 
-        //doc.text(10,start,itemName);
         doc.text(11, start, count.toString(), "center");
         doc.text(73, start, stocks);
         doc.text(85, start, price);

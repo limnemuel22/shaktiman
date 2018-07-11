@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-clientslist",
@@ -29,18 +30,17 @@ export class ClientslistComponent implements OnInit {
   ) {
     this.createForm();
 
-    this.clients = this.global.clients == null ? null : this.global.clients;
-    var interval = setInterval(() => {
-      this.clients = this.global.clients == null ? null : this.global.clients;
-      this.router.url != "/admin/clients/clients-list" ? clearInterval(interval) : null;
+    this.clients = this.global.clients === null ? null : this.global.clients;
+    const interval = setInterval(() => {
+      this.clients = this.global.clients === null ? null : this.global.clients;
+      if (this.router.url !== "/admin/clients/clients-list") {
+        clearInterval(interval);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-    this.caption;
-  }
+  ngOnInit() {}
 
-  
   createForm() {
     this.form = this.formbuilder.group({
       search: [""]
@@ -48,11 +48,11 @@ export class ClientslistComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "clientName") {
+    if (filter === "clientName") {
       this.filterby = "Name";
     }
 
-    if (filter == "clientAddress") {
+    if (filter === "clientAddress") {
       this.filterby = "Address";
     }
     this.field = filter;
@@ -60,7 +60,7 @@ export class ClientslistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -73,11 +73,11 @@ export class ClientslistComponent implements OnInit {
         function: "searchAll",
         field: this.field
       };
-      //console.log(input);
-      this.dbService.post(input).subscribe(data => {
-        //console.log(data);
+      // console.log(input);
+      this.dbService.post(input).subscribe((data: Data) => {
+        // console.log(data);
         if (data.status !== "error") {
-          //console.log(this.transactions);
+          // console.log(this.transactions);
           this.clients = data;
         } else {
           this.messageClass = "alert alert-danger";
@@ -90,5 +90,4 @@ export class ClientslistComponent implements OnInit {
       });
     }
   }
-
 }

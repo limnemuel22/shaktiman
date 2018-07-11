@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import * as jsPDF from "jspdf";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 declare const $;
 
 @Component({
@@ -21,7 +20,7 @@ export class DiscountComponent implements OnInit {
   data = false;
   messageClass;
   message;
-  discounted: boolean = false;
+  discounted = false;
   noData = "No Data Found";
 
   constructor(
@@ -31,21 +30,26 @@ export class DiscountComponent implements OnInit {
     private formbuilder: FormBuilder
   ) {
     this.createForm();
-    this.purchases = this.global.purchases == undefined ? null : this.global.purchases;
-    var interval = setInterval(() => {
+    this.purchases =
+      this.global.purchases === undefined ? null : this.global.purchases;
+    const interval = setInterval(() => {
+      this.purchases =
+        this.global.purchases === undefined ? null : this.global.purchases;
 
-      this.purchases = this.global.purchases == undefined ? null : this.global.purchases;
-
-      if (this.purchases != undefined) {
+      if (this.purchases !== undefined) {
         if (this.search.length <= 0) {
-          this.purchases = this.purchases.filter(p => Number(p.discount.replace(/,/g, "")) <= 0).filter(p => p.price != p.balance);
-        } 
+          this.purchases = this.purchases
+            .filter(p => Number(p.discount.replace(/,/g, "")) <= 0)
+            .filter(p => p.price !== p.balance);
+        }
       }
-      this.router.url != "/admin/accounting/discount" ? clearInterval(interval) : null;
+      if (this.router.url !== "/admin/accounting/discount") {
+        clearInterval(interval);
+      }
     }, 1000);
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -54,7 +58,7 @@ export class DiscountComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -68,11 +72,15 @@ export class DiscountComponent implements OnInit {
         field: this.field
       };
 
-      this.dbService.post(input).subscribe(data => {
+      this.dbService.post(input).subscribe((data: any) => {
         if (data.status !== "error") {
-          for (let p of data) {
-            p.discount = Number(p.discount).toLocaleString("en-us", { minimumFractionDigits: 2 });
-            p.price = Number(p.price).toLocaleString("en-us", { minimumFractionDigits: 2 });
+          for (const p of data) {
+            p.discount = Number(p.discount).toLocaleString("en-us", {
+              minimumFractionDigits: 2
+            });
+            p.price = Number(p.price).toLocaleString("en-us", {
+              minimumFractionDigits: 2
+            });
           }
           this.global.purchases = this.purchases = data;
         } else {
@@ -88,19 +96,19 @@ export class DiscountComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "client.`clientName`") {
+    if (filter === "client.`clientName`") {
       this.filterby = "Client Name";
     }
 
-    if (filter == "purchase.`id`") {
+    if (filter === "purchase.`id`") {
       this.filterby = "D.R. Number";
     }
 
-    if (filter == "purchase.`drDate`") {
+    if (filter === "purchase.`drDate`") {
       this.filterby = "Date Purchase";
     }
 
-    if (filter == "agent.`agentName`") {
+    if (filter === "agent.`agentName`") {
       this.filterby = "Agent";
     }
 

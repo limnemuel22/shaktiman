@@ -3,7 +3,8 @@ import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as jsPDF from "jspdf";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
+import { Data } from "../../model/schema";
 declare const $;
 
 @Component({
@@ -32,16 +33,18 @@ export class PurchaselistComponent implements OnInit {
     private formbuilder: FormBuilder
   ) {
     this.createForm();
-    this.purchases = this.global.purchases == null ? null : this.global.purchases;
-    var getpurchase = setInterval(() => {
-      this.purchases = this.global.purchases == null ? null : this.global.purchases;
-      this.router.url != "/admin/purchase/purchase-list" ? clearInterval(getpurchase) : null;
+    this.purchases =
+      this.global.purchases === null ? null : this.global.purchases;
+    const getpurchase = setInterval(() => {
+      this.purchases =
+        this.global.purchases === null ? null : this.global.purchases;
+      if (this.router.url !== "/admin/purchase/purchase-list") {
+        clearInterval(getpurchase);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-    this.caption;
-  }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -50,7 +53,7 @@ export class PurchaselistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -63,7 +66,7 @@ export class PurchaselistComponent implements OnInit {
         function: "searchPurchase",
         field: this.field
       };
-      this.dbService.post(input).subscribe(data => {
+      this.dbService.post(input).subscribe((data: Data) => {
         if (data.status !== "error") {
           this.purchases = data;
         } else {
@@ -79,19 +82,19 @@ export class PurchaselistComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "client.`clientName`") {
+    if (filter === "client.`clientName`") {
       this.filterby = "Client Name";
     }
 
-    if (filter == "purchase.`id`") {
+    if (filter === "purchase.`id`") {
       this.filterby = "D.R. Number";
     }
 
-    if (filter == "purchase.`drDate`") {
+    if (filter === "purchase.`drDate`") {
       this.filterby = "Date Purchase";
     }
 
-    if (filter == "agent.`agentName`") {
+    if (filter === "agent.`agentName`") {
       this.filterby = "Agent";
     }
 
@@ -100,53 +103,53 @@ export class PurchaselistComponent implements OnInit {
   }
 
   getDrPdf(id) {
-    this.dbService.get("drPDF", id).subscribe(data => {
-      if (data.status == undefined) {
-        this.downLoadPDF(data.id, this.global.pdf['drPDF'], data);
+    this.dbService.get("drPDF", id).subscribe((data: Data) => {
+      if (data.status === undefined) {
+        this.downLoadPDF(data.id, this.global.pdf["drPDF"], data);
       }
     });
   }
 
   downLoadPDF(val, image, data) {
-   
-    let items = data;
-    let drNumber = val;
+    const items = data;
+    const drNumber = val;
     let serial;
-    let clientName = data.clientName;
-    let clientAddress = data.clientAddress;
-    let drDate = data.date;
+    const clientName = data.clientName;
+    const clientAddress = data.clientAddress;
+    const drDate = data.date;
     let qty;
     let engineNo = "";
     let description = "";
     let unitPrice = 0;
     let subTotal;
     let total = 0;
-    let approved = data.approved;
-    let recieved = clientName;
-    let processedBy = data.processedBy;
-    let discount = data[0].discount == "0" ? "" : data[0].discount;
-    let discountedPrice =
-      data[0].discount == "0" ? "" : data[0].discountedPrice;
+    const approved = data.approved;
+    const recieved = clientName;
+    const processedBy = data.processedBy;
+    const discount = data[0].discount === "0" ? "" : data[0].discount;
+    const discountedPrice =
+      data[0].discount === "0" ? "" : data[0].discountedPrice;
     let count = 0;
-    let comments = data.comments;
+    const comments = data.comments;
     const doc = new jsPDF();
-    let imgData = data[0].discount == "0" ? image : this.global.pdf['discountedDrPdf'];
+    const imgData =
+      data[0].discount === "0" ? image : this.global.pdf["discountedDrPdf"];
     doc.addImage(imgData, "JPEG", 0, 0, 210, 300);
     doc.setFontSize(11);
     doc.setFontStyle("Arial");
 
-    let space = 5;
+    const space = 5;
     let itemSpacing = 0;
     let start = 115;
-    let endItem = 125;
+    const endItem = 125;
 
-    for (let key in items) {
+    for (const key in items) {
       if (items.hasOwnProperty(key)) {
-        let element = items[key];
+        const element = items[key];
 
-        if (element["drDate"] != undefined) {
-          let chunks: any = [];
-          let num = 25;
+        if (element["drDate"] !== undefined) {
+          const chunks: any = [];
+          const num = 25;
           description = element["description"];
           serial = element["serial"];
           qty = element["quantity"];
@@ -161,10 +164,28 @@ export class PurchaselistComponent implements OnInit {
           doc.text(23, start, qty, "center");
           doc.text(29, start, engineNo);
           doc.text(29, start + 5, serial);
-          doc.text(145, start, Number(unitPrice).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "center");
-          doc.text(183, start, Number(subTotal).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "center");
+          doc.text(
+            145,
+            start,
+            Number(unitPrice)
+              .toLocaleString("en-us", { minimumFractionDigits: 2 })
+              .toString(),
+            "center"
+          );
+          doc.text(
+            183,
+            start,
+            Number(subTotal)
+              .toLocaleString("en-us", { minimumFractionDigits: 2 })
+              .toString(),
+            "center"
+          );
 
-          for (let i = 0, charsLength = description.length; i < charsLength; i += num) {
+          for (
+            let i = 0, charsLength = description.length;
+            i < charsLength;
+            i += num
+          ) {
             chunks.push(description.substring(i, i + num));
           }
 
@@ -195,20 +216,32 @@ export class PurchaselistComponent implements OnInit {
     doc.text(155, 80, processedBy);
     doc.text(20, 230, comments);
     doc.setTextColor(255, 0, 0);
-    doc.text(200, discount == "" ? 215 : 202, Number(total)
-      .toLocaleString("en-us", { minimumFractionDigits: 2 })
-      .toString(),
-      "right"
-    );
-    doc.text(200, 207, discount == "" ? "" : Number(discount)
-      .toLocaleString("en-us", { minimumFractionDigits: 2 })
-      .toString(),
+    doc.text(
+      200,
+      discount === "" ? 215 : 202,
+      Number(total)
+        .toLocaleString("en-us", { minimumFractionDigits: 2 })
+        .toString(),
       "right"
     );
     doc.text(
-      200, discount == "" ? 202 : 215, discountedPrice == "" ? "" : Number(discountedPrice)
-        .toLocaleString("en-us", { minimumFractionDigits: 2 })
-        .toString(),
+      200,
+      207,
+      discount === ""
+        ? ""
+        : Number(discount)
+            .toLocaleString("en-us", { minimumFractionDigits: 2 })
+            .toString(),
+      "right"
+    );
+    doc.text(
+      200,
+      discount === "" ? 202 : 215,
+      discountedPrice === ""
+        ? ""
+        : Number(discountedPrice)
+            .toLocaleString("en-us", { minimumFractionDigits: 2 })
+            .toString(),
       "right"
     );
     doc.setTextColor(0, 0, 0);

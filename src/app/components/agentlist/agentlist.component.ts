@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-agentlist",
@@ -27,16 +27,16 @@ export class AgentlistComponent implements OnInit {
   ) {
     this.createForm();
 
-    this.agents = this.global.agents == null ? null : this.global.agents;
-    var interval = setInterval(() => {
-      this.agents = this.global.agents == null ? null : this.global.agents;
-      this.router.url != "/admin/accounting/payment-list" ? clearInterval(interval) : null;
+    this.agents = this.global.agents === null ? null : this.global.agents;
+    const interval = setInterval(() => {
+      this.agents = this.global.agents === null ? null : this.global.agents;
+      if (this.router.url !== "/admin/accounting/payment-list") {
+        clearInterval(interval);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-    this.caption;
-  }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -45,11 +45,11 @@ export class AgentlistComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "agentName") {
+    if (filter === "agentName") {
       this.filterby = "Name";
     }
 
-    if (filter == "agentAddress") {
+    if (filter === "agentAddress") {
       this.filterby = "Address";
     }
 
@@ -58,7 +58,7 @@ export class AgentlistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -72,7 +72,7 @@ export class AgentlistComponent implements OnInit {
         field: this.field
       };
 
-      this.dbService.post(input).subscribe(data => {
+      this.dbService.post(input).subscribe((data: any) => {
         if (data.status !== "error") {
           this.agents = data;
         } else {

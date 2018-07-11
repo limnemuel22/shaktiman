@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Global } from "../../modules/global";
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
+import { Data } from "../../model/schema";
 import * as jsPDF from "jspdf";
 
 @Component({
@@ -29,14 +30,16 @@ export class PaymentlistComponent implements OnInit {
     this.createForm();
 
     this.payments = this.global.payments == null ? null : this.global.payments;
-    var interval = setInterval(() => {
-      this.payments = this.global.payments == null ? null : this.global.payments;
-      this.router.url != "/admin/accounting/payment-list" ? clearInterval(interval) : null;
+    const interval = setInterval(() => {
+      this.payments =
+        this.global.payments == null ? null : this.global.payments;
+      if (this.router.url !== "/admin/accounting/payment-list") {
+        clearInterval(interval);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
   createForm() {
     this.form = this.formbuilder.group({
       search: [""]
@@ -44,7 +47,6 @@ export class PaymentlistComponent implements OnInit {
   }
 
   filterBy(filter) {
-  
     switch (filter) {
       case "payment.`id`":
         this.filterby = "S.I. Number";
@@ -69,7 +71,7 @@ export class PaymentlistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -83,7 +85,7 @@ export class PaymentlistComponent implements OnInit {
         field: this.field
       };
 
-      this.dbService.post(input).subscribe(data => {
+      this.dbService.post(input).subscribe((data: Data) => {
         if (data.status !== "error") {
           this.payments = data;
         } else {
@@ -100,16 +102,22 @@ export class PaymentlistComponent implements OnInit {
   }
 
   getSiPdf(id) {
-    let pay = this.payments.filter(p => p.SI == id);
-    let total = pay[0].price;
-    let discount = Number(pay[0].discount.replace(/,/g, "").split(".")[0]);
-    let payment = Number(pay[0].amount.replace(/,/g, "").split(".")[0]);
-    let balance = Number(pay[0].balance.replace(/,/g, "").split(".")[0]);
+    const pay = this.payments.filter(p => p.SI === id);
+    const total = pay[0].price;
+    const discount = Number(pay[0].discount.replace(/,/g, "").split(".")[0]);
+    const payment = Number(pay[0].amount.replace(/,/g, "").split(".")[0]);
+    const balance = Number(pay[0].balance.replace(/,/g, "").split(".")[0]);
 
-    this.previousBal = discount > 0 ? (payment + balance).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString()
-      : (payment + balance).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString();
+    this.previousBal =
+      discount > 0
+        ? (payment + balance)
+            .toLocaleString("en-us", { minimumFractionDigits: 2 })
+            .toString()
+        : (payment + balance)
+            .toLocaleString("en-us", { minimumFractionDigits: 2 })
+            .toString();
 
-    this.dbService.get("siPDF",id).subscribe(data => {
+    this.dbService.get("siPDF", id).subscribe(data => {
       this.downLoadPDF(data);
     });
   }
@@ -117,55 +125,55 @@ export class PaymentlistComponent implements OnInit {
   downLoadPDF(data) {
     const doc = new jsPDF();
 
-    let discount = data[0].discount == "0" ? "0.00" : data[0].discount;
-    let discountedPrice = data[0].discountedPrice;
-    let amount = data[0].amount;
-    let balance = data[0].balance;
-    let previousBal = this.previousBal;
+    const discount = data[0].discount === "0" ? "0.00" : data[0].discount;
+    const discountedPrice = data[0].discountedPrice;
+    const amount = data[0].amount;
+    const balance = data[0].balance;
+    const previousBal = this.previousBal;
 
-    var username = data.id;
-    let imgData = this.global.pdf["discountedSiPdf"];
+    const username = data.id;
+    const imgData = this.global.pdf["discountedSiPdf"];
     doc.addImage(imgData, "JPEG", 0, 0, 210, 300);
     doc.setFontSize(11);
     doc.setFontStyle("Arial");
 
-    var siNumber = data.id;
-    var clientName = data.clientName.toUpperCase();
-    var clientAddress = data.clientAddress;
-    var siDate = data.date;
-    var approved = data.approved;
-    var recieved = clientName;
-    var idNo = username;
-    var date = username;
-    var issued = username;
-    var engineNo = username;
-    var chasis = username;
-    var description = username;
-    var proccessBy = data.proccessBy;
-    var qty;
-    var serial;
-    var total = 0;
-    var unitPrice = 0;
-    var subTotal = 0;
-    var itemSpacing = 0;
-    var endItem = 120;
-    var count = 0;
-    var start = 110;
-    var pageHeight = doc.internal.pageSize.height;
-    var engineNumbers;
-    let addBottom = 2;
+    const siNumber = data.id;
+    const clientName = data.clientName.toUpperCase();
+    const clientAddress = data.clientAddress;
+    const siDate = data.date;
+    const approved = data.approved;
+    const recieved = clientName;
+    const idNo = username;
+    const date = username;
+    const issued = username;
+    let engineNo = username;
+    let chasis = username;
+    let description = username;
+    const proccessBy = data.proccessBy;
+    let qty;
+    let serial;
+    let total = 0;
+    let unitPrice = 0;
+    let subTotal = 0;
+    let itemSpacing = 0;
+    let endItem = 120;
+    let count = 0;
+    let start = 110;
+    const pageHeight = doc.internal.pageSize.height;
+    let engineNumbers;
+    const addBottom = 2;
 
-    for (var key in data) {
+    for (const key in data) {
       if (data.hasOwnProperty(key)) {
-        var element = data[key];
-        //console.log(element["price"]);
-        if (element["quantity"] != undefined) {
-          var chunks: any[] = [];
-          var num = 30;
-          var itemstart = start;
-          var space = 5;
+        const element = data[key];
+        // console.log(element["price"]);
+        if (element["quantity"] !== undefined) {
+          const chunks: any[] = [];
+          const num = 30;
+          const itemstart = start;
+          const space = 5;
 
-          //description = element["description"];
+          // description = element["description"];
           qty = element["quantity"];
           serial = element["serial"];
           engineNo = element["engine"];
@@ -180,7 +188,7 @@ export class PaymentlistComponent implements OnInit {
           doc.text(13, start, count.toString(), "center");
           doc.text(23, start, qty);
           for (
-            var i = 0, charsLength = engineNumbers.length;
+            let i = 0, charsLength = engineNumbers.length;
             i < charsLength;
             i += num
           ) {
@@ -199,17 +207,21 @@ export class PaymentlistComponent implements OnInit {
           doc.text(
             180,
             start,
-            Number(subTotal).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "center");
+            Number(subTotal)
+              .toLocaleString("en-us", { minimumFractionDigits: 2 })
+              .toString(),
+            "center"
+          );
 
           for (
-            var i = 0, charsLength = description.length;
+            let i = 0, charsLength = description.length;
             i < charsLength;
             i += num
           ) {
             chunks.push(description.substring(i, i + num));
           }
 
-          for (var i = 0; i < chunks.length; i += 1) {
+          for (let i = 0; i < chunks.length; i += 1) {
             doc.text(62, start, chunks[i]);
             start += space;
             endItem = start;
@@ -234,20 +246,48 @@ export class PaymentlistComponent implements OnInit {
     doc.text(180, 263, recieved, "center");
     doc.setTextColor(255, 0, 0);
 
-    //total || Total Amount
-    doc.text(195, discount == "" ? 240 : 218 + addBottom, Number(total).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "right");
+    // total || Total Amount
+    doc.text(
+      195,
+      discount === "" ? 240 : 218 + addBottom,
+      Number(total)
+        .toLocaleString("en-us", { minimumFractionDigits: 2 })
+        .toString(),
+      "right"
+    );
 
-    //discount
-    doc.text(195, 223 + addBottom, Number(discount).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "right");
+    // discount
+    doc.text(
+      195,
+      223 + addBottom,
+      Number(discount)
+        .toLocaleString("en-us", { minimumFractionDigits: 2 })
+        .toString(),
+      "right"
+    );
 
-    //previousBal || Remaining Bal
+    // previousBal || Remaining Bal
     doc.text(195, 230, previousBal, "right");
 
-    //Payment
-    doc.text(195, 232 + addBottom, Number(amount).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "right");
+    // Payment
+    doc.text(
+      195,
+      232 + addBottom,
+      Number(amount)
+        .toLocaleString("en-us", { minimumFractionDigits: 2 })
+        .toString(),
+      "right"
+    );
 
-    //Balance
-    doc.text(195, 238 + addBottom, Number(balance).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString(), "right");
+    // Balance
+    doc.text(
+      195,
+      238 + addBottom,
+      Number(balance)
+        .toLocaleString("en-us", { minimumFractionDigits: 2 })
+        .toString(),
+      "right"
+    );
 
     doc.save("SI" + "-" + siNumber + "(" + siDate + ").pdf");
   }

@@ -3,6 +3,7 @@ import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Global } from "../../modules/global";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-userlist",
@@ -27,18 +28,16 @@ export class UserlistComponent implements OnInit {
     private formbuilder: FormBuilder
   ) {
     this.createForm();
-    this.users = this.global.users == null ? null : this.global.users;
+    this.users = this.global.users === null ? null : this.global.users;
     const getpurchase = setInterval(() => {
-      this.users = this.global.users == null ? null : this.global.users;
-      this.router.url != "/admin/purchase/purchase-list"
-        ? clearInterval(getpurchase)
-        : null;
+      this.users = this.global.users === null ? null : this.global.users;
+      if (this.router.url !== "/admin/purchase/purchase-list") {
+        clearInterval(getpurchase);
+      }
     }, 1000);
   }
 
-  ngOnInit() {
-    this.caption;
-  }
+  ngOnInit() {}
 
   createForm() {
     this.form = this.formbuilder.group({
@@ -47,11 +46,11 @@ export class UserlistComponent implements OnInit {
   }
 
   filterBy(filter) {
-    if (filter == "employeeName") {
+    if (filter === "employeeName") {
       this.filterby = "Employee Name";
     }
 
-    if (filter == "username") {
+    if (filter === "username") {
       this.filterby = "Username";
     }
     this.field = filter;
@@ -59,7 +58,7 @@ export class UserlistComponent implements OnInit {
   }
 
   searchPO() {
-    if (this.search == "") {
+    if (this.search === "") {
       this.messageClass = "alert alert-danger";
       this.message = "Search field is empty!";
       setTimeout(() => {
@@ -72,7 +71,7 @@ export class UserlistComponent implements OnInit {
         function: "searchAll",
         field: this.field
       };
-      this.dbService.post(input).subscribe(data => {
+      this.dbService.post(input).subscribe((data: Data) => {
         if (data.status !== "error") {
           this.users = data;
         } else {
