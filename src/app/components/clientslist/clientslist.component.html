@@ -1,0 +1,78 @@
+<div class="container-fluid">
+
+  <div class="row show-hide-message" style="margin-top:10px;">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+
+  <form [formGroup]="form" (submit)="searchPO()">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-10" style="margin-top:10px;">
+          <div class="col-sm-6">
+            <input type="submit" class="form-control" type="text" name="search" [(ngModel)]="search" formControlName="search" placeholder="*Search {{filterby}}"
+            />
+          </div>
+          <div class="col-sm-3">
+            <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">
+              {{caption}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/admin/clients/clients-list" (click)="filterBy('clientName')">Name</a>
+              </li>
+              <li>
+                <a routerLink="/admin/clients/clients-list" (click)="filterBy('clientAddress')">Address</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <a id="search" class="btn btn-danger" style=" width:100%; margin:0px;" (click)="searchPO()">Search</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="text-center" style="background-color:dimgrey; color:white;">
+        <td>Client Name</td>
+        <td>Address</td>
+        <td class="one">Contact No.</td>
+        <td class="three">Email Address</td>
+        <td width=150 align="center">Action</td>
+      </tr>
+    </thead>
+    <tbody style="background-color:#fff;">
+      <tr *ngIf="!clients">
+        <td>No Data Found</td>
+        <td>No Data Found</td>
+        <td class="one">No Data Found</td>
+        <td class="three">No Data Found</td>
+        <td width=150 class="text-center">
+          No Data Found
+        </td>
+      </tr>
+
+      <tr *ngFor="let user of clients">
+        <td>{{user.clientName}}</td>
+        <td>{{user.clientAddress}}</td>
+        <td class="one">{{user.clientContact}}</td>
+        <td class="three">{{user.clientEmail}}</td>
+        <td width=150 class="text-center">
+          <div class="col-sm-10">
+            <a *ngIf=" global.userType != 'Marketing'" class="btn btn-success" routerLink="/admin/clients/edit/{{user.id}}">Edit</a>
+          </div>
+          <div class="col-sm-10">
+            <a class="btn btn-info" routerLink="/admin/clients/show/{{user.id}}">Details</a>
+          </div>
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+</div>

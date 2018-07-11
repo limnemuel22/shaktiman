@@ -1,0 +1,57 @@
+.btn{
+    margin-bottom: 10px;
+    width: 100%;
+    margin-left: 20px;
+}
+
+.container-fluid{
+    min-height: 820px;
+    margin: 0px 50px 0px 50px;
+}
+
+
+@media only screen and (min-width: 450px) {
+    .btn{
+        margin-top: 10px !important;
+        width: 100px !important;
+    }
+
+
+}
+
+@media only screen and (min-width: 768px) {
+    .container-fluid{
+        margin: 0px 10px 0px 10px;
+    }
+
+    .btn{
+        margin-top: 0px !important;
+        width: 100px !important;
+    }
+
+}
+
+@media only screen and (min-width: 1000px) {
+
+    .btn{
+        width: 100% !important;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .three{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .two{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .one{
+        display: none;
+    }
+}

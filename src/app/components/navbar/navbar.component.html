@@ -1,0 +1,76 @@
+<div class="navbar-wrapper">
+    <div class="container-fluid">
+        <nav class="navbar navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+                        aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <img class="navbar-brand" style="height:70px;" src="../assets/img/logos.png">
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav pull-right">
+                        <li routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                            <a>Home</a>
+                        </li>
+                        <li class="dropdown">
+                            <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="dropdown-toggle active"
+                                id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/boom-sprayer" routerLinkActive="active">Boom Sprayer</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/compost-spreader" routerLinkActive="active">Compost Spreader</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/fertilizer-broadcaster" routerLinkActive="active">Fertilizer Broadcaster</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/hay-rake" routerLinkActive="active">Hay Rake</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/mobile-shredder" routerLinkActive="active">Mobile Shredder</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/post-hole-digger" routerLinkActive="active">Post Hole Digger</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/power-harrow" routerLinkActive="active">Power Harrow</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/mini-series" routerLinkActive="active">Rotary Tiller</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/rotary-slasher" routerLinkActive="active">Rotary Slasher</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/roto-seed-drill" routerLinkActive="active">Roto Seed Drill</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/round-baler" routerLinkActive="active">Round Baler SRB 60</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/self-propelled-platform" routerLinkActive="active">Self Propelled Platform</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="/products/square-baler" routerLinkActive="active">Square Baler</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li routerLink="/about" routerLinkActive="active">
+                            <a>About Us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>

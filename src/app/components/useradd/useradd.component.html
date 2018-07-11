@@ -1,0 +1,148 @@
+<div class="container" id="content">
+  <div class="panel panel-default">
+    <div class="panel-heading">User Details Form : You can add user and their priveleges here.</div>
+
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal" (submit)="addUser()">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Employee Name : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.employeeName.errors && form.controls.employeeName.dirty, 'has-success': form.controls.employeeName.valid && form.controls.employeeName.dirty }">
+            <input type="text" class="form-control" formControlName="employeeName" [(ngModel)]="model.employeeName" name="employeeName">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.employeeName.errors?.required && form.controls.employeeName.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.employeeName.errors?.validateLetters && form.controls.employeeName.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.employeeName.errors?.minlength && form.controls.employeeName.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+          <label class="col-sm-2 control-label">Birthday :</label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.birthday.errors && form.controls.birthday.dirty, 'has-success': form.controls.birthday.valid && form.controls.birthday.dirty }">
+            <input type="text" class="form-control" placeholder="MM/DD/YYYY" formControlName="birthday" [(ngModel)]="model.birthday"
+              name="birthday">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.birthday.errors?.required && form.controls.birthday.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.birthday.errors?.validateDate && form.controls.birthday.dirty">
+                Invalid date format must be Month/Day/Year.
+                <br> Example : 01/01/2000.
+              </li>
+              <li *ngIf="form.controls.birthday.errors?.minlength && form.controls.birthday.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Position : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.position.errors && form.controls.position.dirty, 'has-success': form.controls.position.valid && form.controls.position.dirty }">
+            <input type="text" class="form-control" formControlName="position" [(ngModel)]="model.position" name="position">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.position.errors?.required && form.controls.position.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.position.errors?.validateLetters && form.controls.position.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+            </ul>
+          </div>
+          <label class="col-sm-2 control-label">User Type : </label>
+          <div class="col-sm-3">
+            <a href="#" class="dropdown-toggle btn btn1 btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              {{usertype}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/admin/user/user-add" (click)="filterBy('Admin')">Admin</a>
+              </li>
+              <li>
+                <a routerLink="/admin/user/user-add" (click)="filterBy('Marketing')">Marketing</a>
+              </li>
+              <li>
+                <a routerLink="/admin/user/user-add" (click)="filterBy('Accounting')">Accounting</a>
+              </li>
+              <li>
+                <a routerLink="/admin/user/user-add" (click)="filterBy('Purchasing')">Purchasing</a>
+              </li>
+              <li>
+                <a routerLink="/admin/user/user-add" (click)="filterBy('IT Staff')">IT Staff</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Username : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.username.errors && form.controls.username.dirty, 'has-success': form.controls.username.valid && form.controls.username.dirty }">
+            <input type="text" class="form-control" formControlName="username" [(ngModel)]="model.username" name="username">
+            <ul class="help-block">
+              <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.username.errors?.minlength && form.controls.username.dirty">
+                Must be 8 characters long.
+              </li>
+              <li *ngIf="form.controls.username.errors?.validateUsername && form.controls.username.dirty">
+                Username must not have any special characters and not start with a number.
+              </li>
+              <!-- <li *ngIf="usernameMessage">
+                    {{usernameMessage}}
+                  </li> -->
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.password.errors && form.controls.password.dirty, 'has-success': form.controls.password.valid && form.controls.password.dirty }">
+            <input type="password" class="form-control" formControlName="password" [(ngModel)]="model.password" name="password">
+            <ul class="help-block">
+              <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.password.errors?.minlength && form.controls.password.dirty">
+                Must be 8 characters long.
+              </li>
+              <li *ngIf="form.controls.password.errors?.validatePassword && form.controls.password.dirty">
+                Password only accepts this special characters ( _ . - @ ! ), letters and numbers.
+              </li>
+            </ul>
+          </div>
+          <label class="col-sm-2 control-label">Confirm Password : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error':(form.controls.confirm.errors && form.controls.confirm.dirty) || (form.errors?.matchPassword && form.controls.confirm.dirty), 'has-success': !form.controls.confirm.errors && !form.errors?.matchPassword}">
+            <input type="password" class="form-control" formControlName="confirm" name="confirm">
+            <ul class="help-block">
+              <li *ngIf="form.controls.confirm.errors?.required && form.controls.confirm.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.errors?.matchPassword && form.controls.confirm.dirty">
+                Password did not match.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button [disabled]="!form.valid || processing" type="submit" mat-raised-button color="accent">Save</button>
+            <a mat-raised-button color="primary" style="background-color:#DC3545;" (click)="Clear()">Clear</a>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

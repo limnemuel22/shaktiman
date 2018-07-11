@@ -1,0 +1,127 @@
+<div class="container" id="content">
+  <div class="panel panel-default">
+    <div class="panel-heading">Agent Details Form : You can add Agent here.</div>
+
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <form [formGroup]="form" class="form-horizontal" (submit)="addAgent()">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Agent Name : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentName.errors && form.controls.agentName.dirty, 'has-success': form.controls.agentName.valid && form.controls.agentName.dirty }">
+            <input type="text" class="form-control" formControlName="agentName" [(ngModel)]="model.agentName" name="agentName">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentName.errors?.required && form.controls.agentName.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.agentName.errors?.validateLetters && form.controls.agentName.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.agentName.errors?.minlength && form.controls.agentName.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Birthday :</label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentBirthday.errors && form.controls.agentBirthday.dirty, 'has-success': form.controls.agentBirthday.valid && form.controls.agentBirthday.dirty }">
+            <input type="text" class="form-control" placeholder="MM/DD/YYYY" formControlName="agentBirthday" [(ngModel)]="model.agentBirthday"
+              name="agentBirthday">
+
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentBirthday.errors?.validateDate && form.controls.agentBirthday.dirty">
+                Invalid date format must be Month/Day/Year.
+                <br> Example : 01/01/2000.
+              </li>
+              <li *ngIf="form.controls.agentBirthday.errors?.minlength && form.controls.agentBirthday.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Age : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentAge.errors && form.controls.agentAge.dirty, 'has-success': form.controls.agentAge.valid && form.controls.agentAge.dirty }">
+            <input type="text" class="form-control" formControlName="agentAge" [(ngModel)]="model.agentAge" name="agentAge">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentAge.errors?.validateLetters && form.controls.agentAge.dirty">
+                This field only accepts Number and no special characters.
+              </li>
+            </ul>
+          </div>
+
+
+          <label class="col-sm-2 control-label">Address : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentAddress.errors && form.controls.agentAddress.dirty, 'has-success': form.controls.agentAddress.valid && form.controls.agentAddress.dirty }">
+            <input type="text" class="form-control" formControlName="agentAddress" [(ngModel)]="model.agentAddress" name="agentAddress">
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentAddress.errors?.required && form.controls.agentAddress.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.agentAddress.errors?.minlength && form.controls.agentAddress.dirty">
+                Must be 8 characters long.
+              </li>
+              <li *ngIf="form.controls.agentAddress.errors?.agentAddress && form.controls.agentAddress.dirty">
+
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Email Address : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentEmail.errors && form.controls.agentEmail.dirty, 'has-success': form.controls.agentEmail.valid && form.controls.agentEmail.dirty }">
+            <input type="text" class="form-control" formControlName="agentEmail" [(ngModel)]="model.agentEmail" name="agentEmail">
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentEmail.errors?.minlength && form.controls.agentEmail.dirty">
+                Must be 8 characters long.
+              </li>
+              <li *ngIf="form.controls.agentEmail.errors?.agentEmail && form.controls.agentEmail.dirty">
+                Most be Email Address Only
+              </li>
+
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Contact No. : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentContact.errors && form.controls.agentContact.dirty, 'has-success': form.controls.agentContact.valid && form.controls.agentContact.dirty }">
+            <input type="agentContact" class="form-control" formControlName="agentContact" [(ngModel)]="model.agentContact" name="agentContact">
+            <ul class="help-block">
+              <li *ngIf="form.controls.agentContact.errors?.required && form.controls.agentContact.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.agentContact.errors?.minlength && form.controls.agentContact.dirty">
+                Must be 11 Numbers Only.
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success">Save</button>
+            <a class="btn btn-danger" (click)="Clear()">Clear</a>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

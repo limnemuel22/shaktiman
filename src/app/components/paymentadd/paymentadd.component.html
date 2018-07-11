@@ -1,0 +1,126 @@
+<div class="container" id="content">
+  <div class="panel panel-default">
+    <div class="panel-heading">Payment Form : You can search DR and add payemnt in here.</div>
+
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal" (submit)="addPayment()">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">D.R. Number : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.drNumber.errors && form.controls.drNumber.dirty, 'has-success': form.controls.drNumber.valid && form.controls.drNumber.dirty }">
+            <div class="col-sm-8" style="padding-left:0;">
+              <input type="text" class="form-control" (keyup.enter)="searchDR()" formControlName="drNumber" [(ngModel)]="model.drNumber"
+                name="drNumber">
+            </div>
+            <div class="col-sm-3" style="padding-left:0;">
+              <a [class.disabled]="search" class="btn btn-success" (click)=searchDR()>
+                <i class="fa fa-search"></i> Search</a>
+            </div>
+
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.drNumber.errors?.required && form.controls.drNumber.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.drNumber.errors?.validateLetters && form.controls.drNumber.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.drNumber.errors?.minlength && form.controls.drNumber.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Client : </label>
+          <div class="col-sm-3">
+            <p class="form-control">{{model.client}}</p>
+          </div>
+
+          <label class="col-sm-2 control-label">Agent :</label>
+          <div class="col-sm-3">
+            <p class="form-control">{{model.agent}}</p>
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Amount : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.amount.errors && form.controls.amount.dirty, 'has-success': form.controls.amount.valid && form.controls.amount.dirty }">
+
+            <input type="text" class="form-control" formControlName="amount" [(ngModel)]="model.amount" name="amount">
+
+            <ul class="help-block">
+              <li *ngIf="form.controls.amount.errors?.required && form.controls.amount.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.amount.errors?.minlength && form.controls.amount.dirty">
+                Must be 8 characters long.
+              </li>
+              <li *ngIf="form.controls.amount.errors?.amount && form.controls.amount.dirty">
+                Most be Email Address Only
+              </li>
+
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Date :</label>
+          <div class="col-sm-3">
+            <p class="form-control">{{model.paymentDate}}</p>
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Approved by : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.approved.errors && form.controls.approved.dirty, 'has-success': form.controls.approved.valid && form.controls.approved.dirty }">
+            <input type="text" class="form-control" formControlName="approved" [(ngModel)]="model.approved" name="approved">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.approved.errors?.required && form.controls.approved.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.approved.errors?.validateLetters && form.controls.approved.dirty">
+                Must not have special characters.
+              </li>
+              <li *ngIf="form.controls.approved.errors?.minlength && form.controls.approved.dirty">
+                Must be atleast 5 characters.
+              </li>
+            </ul>
+          </div>
+
+
+          <label class="col-sm-2 control-label">Recieved by : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.recieved.errors && form.controls.recieved.dirty, 'has-success': form.controls.recieved.valid && form.controls.recieved.dirty }">
+            <input type="text" class="form-control" formControlName="recieved" [(ngModel)]="model.recieved" name="recieved">
+            <ul class="help-block">
+              <li *ngIf="form.controls.recieved.errors?.validateLetters && form.controls.recieved.dirty">
+                Must not have special characters.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button [disabled]="!form.valid || drStatus" type="submit" class="btn btn-success">Save</button>
+            <a class="btn btn-danger" (click)="Clear()">Clear</a>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>

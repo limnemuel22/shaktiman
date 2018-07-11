@@ -1,0 +1,44 @@
+<div class="container-fluid" style="padding-top:25px;padding-right:25px;padding-left:25px;">
+
+  <h3 style="color:#fff;">DR No.: {{id}}</h3>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="text-center" style="background-color:dimgrey; color:white;">
+        <td>S.I. No.</td>
+        <td>Date</td>
+        <td class="one">Amount</td>
+        <td class="two">Approved by</td>
+        <td class="three">Received By</td>
+      </tr>
+    </thead>
+    <tbody style="background-color:#fff;">
+      <tr *ngFor="let purchase of data">
+        <td class="text-center">{{purchase.id}}</td>
+        <td class="text-center">{{purchase.drDate}}</td>
+        <td class="one text-center">&#8369; {{purchase.amount}}</td>
+        <td class="three text-center">{{purchase.approved}}</td>
+        <td class="three text-center">{{purchase.recieved}}</td>
+      </tr>
+      <tr *ngIf="!message">
+        <td class="text-center">No data found</td>
+        <td class="text-center">No data found</td>
+        <td class="one text-center">No data found</td>
+        <td class="three">No data found</td>
+        <td class="three">No data found</td>
+      </tr>
+      <tr>
+        <td class="text-center"></td>
+        <td class="text-center">
+          <b>Total Payment</b>
+        </td>
+        <td class="one text-center">
+          <b>&#8369; {{total}}</b>
+        </td>
+        <td class="three"></td>
+        <td class="three"></td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

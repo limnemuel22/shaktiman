@@ -1,0 +1,45 @@
+.panel{
+    margin-top: 20px;
+}
+
+
+table {
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 450px) {
+    .btn{
+        margin-left: 0px;
+    }
+    .one{
+        display: none;
+    }
+
+}
+
+@media only screen and (max-width: 750px) {
+    .two{
+        display: none;
+    }
+
+    .container-fluid{
+        margin: 0px 10px 0px 10px;
+    }
+
+}
+
+@media only screen and (max-width: 1000px) {
+    .three{
+        display: none;
+    }
+
+    .four{
+        display: none;
+    }
+
+    .btn{
+        width: 80px !important;
+    }
+}

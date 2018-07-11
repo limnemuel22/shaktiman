@@ -1,0 +1,30 @@
+.panel {
+    margin-top: 20px;
+}
+
+.dropdown-menu {
+   left: 5%;
+   width: 90%;
+}
+
+
+ul {
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+li > a{
+    color: #000;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+li {
+    cursor: pointer;
+    padding-left: 20px; 
+}
+
+li:hover { 
+    background-color:rgb(233, 233, 233); 
+}
+

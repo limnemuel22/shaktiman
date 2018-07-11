@@ -1,0 +1,76 @@
+
+<div class="container-fluid">
+
+    <h1 style="color:#fff">Sales Report</h1>
+    <hr>
+  
+      <div class="row show-hide-message" style="margin-top:10px;">
+          <div [ngClass]="messageClass">
+            {{ message }}
+          </div>
+      </div>
+  
+    <form [formGroup]="form" >
+     <div class="form-group">
+       <div class="row">
+         <div class="col-sm-10" style="margin-top:10px;">
+             <div class="col-sm-2">
+                <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    {{monthFilter}}
+                  </a>
+                  <ul style="max-height:350px; overflow-y :auto; overflow-x:hidden; margin-left:15px;" class="dropdown-menu">
+                    <li #mo id="{{month}}" *ngFor="let month of months"><a routerLink="/admin/reports/sales" (click)="filterBy('Month',mo.id)">{{month}}</a></li>
+                  </ul>
+             </div>
+             <div class="col-sm-2">
+              <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  {{yearFilter}}
+                </a>
+                <ul style="max-height:350px; overflow-y :auto; overflow-x:hidden; margin-left:15px;" class="dropdown-menu">
+                  <li #val id="{{year}}" *ngFor="let year of years"><a routerLink="/admin/reports/sales" (click)="filterBy('Year',val.id)">{{year}}</a></li>
+                </ul>
+           </div>
+             <div class="col-sm-2">
+                <a  class="btn btn-danger" style=" width:100%; margin:0px;" (click)="getPurchases()">Generate</a>
+             </div>
+             <div class="col-sm-2">
+              <a class="btn btn-success" style=" width:100%; margin:0px;" (click)="print()">Print</a>
+           </div>
+            </div>
+       </div>
+     </div>
+   </form>
+   <hr>
+   <table *ngIf="generate" class="table table-bordered">
+       <thead>
+         <tr class="text-center" style="background-color:dimgrey; color:white;">
+           <td>Date</td>
+           <td>QTY</td>
+           <td style="width:350px;">Particulars</td>
+           <td class="one">Price</td>
+           <td class="two">Special Discount</td>
+           <td class="three">Amount</td>
+           <td class="three">Downpayment</td>
+           <td class="three">Remaining Bal</td>
+           <td class="three">Agent Commission</td>
+           <td class="three">Remarks</td>
+         </tr>
+       </thead>
+       <tbody style="background-color:#fff;">
+          <tr *ngFor="let purchase of purchases">
+             <td>{{purchase.drDate}}</td>
+             <td class="text-center">{{purchase.qty}}</td>
+             <td>{{purchase.items}}<br>{{purchase.clientName}}</td>
+             <td class="one">{{purchase.price}}</td>
+             <td class="two text-center">{{purchase.discount}}</td>
+             <td class="three text-center">{{purchase.amount}}</td>
+             <td class="three text-center">{{purchase.downpayment}}</td>
+             <td class="three text-center">{{purchase.balance}}</td>
+             <td class="three text-center">{{purchase.commission}}</td>
+             <td class="three">{{purchase.remarks}}</td>
+          </tr>
+       </tbody>
+      
+     </table>
+   </div>
+  

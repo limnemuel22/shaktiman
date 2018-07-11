@@ -1,0 +1,70 @@
+<div class="container-fluid">
+
+  <div class="row show-hide-message" style="margin-top:10px;">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+
+  <form [formGroup]="form" (submit)="searchPO()">
+    <div class="form-group">
+      <div class="row">
+
+        <div class="col-sm-10" style="margin-top:10px;">
+          <div class="col-sm-6">
+            <input type="submit" class="form-control" type="text" name="search" [(ngModel)]="search" formControlName="search" placeholder="*Search {{filterby}}"
+            />
+          </div>
+          <div class="col-sm-3">
+            <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">
+              {{caption}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/admin/user/user-list" (click)="filterBy('employeeName')">Employee Name</a>
+              </li>
+              <li>
+                <a routerLink="/admin/user/user-list" (click)="filterBy('username')">Username</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-3">
+            <a id="search" mat-raised-button color="primary" style=" width:100%; margin:0px;background-color:#DC3545;" (click)="searchPO()">Search</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </form>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="text-center" style="background-color:dimgrey; color:white;">
+        <td>Employee Name</td>
+        <td>Username</td>
+        <td class="one">Status</td>
+        <td class="two">Position</td>
+        <td class="three">User Type</td>
+        <td class="three">Birthday</td>
+        <td width=150 align="center">Action</td>
+      </tr>
+    </thead>
+    <tbody style="background-color:#fff;">
+      <tr *ngFor="let user of users">
+        <td>{{user.employeeName}}</td>
+        <td>{{user.username}}</td>
+        <td class="one">{{user.islogin}}</td>
+        <td class="two">{{user.position}}</td>
+        <td class="three">{{user.usertype}}</td>
+        <td class="three">{{user.birthday}}</td>
+        <td width=150 class="text-center">
+          <div class="col-sm-10">
+            <button mat-raised-button color="primary"  style="background-color:rgb(24, 189, 3);" routerLink="/admin/user/edit/{{user.id}}">Edit</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>

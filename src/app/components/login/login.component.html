@@ -1,0 +1,87 @@
+<div *ngIf="isLogin" style="background-color: #4e4e4e; height: 100%;">
+  <div class="container text-center" style="height: 100%; padding: 25%; ">
+    <div style="padding: 0% 30%;">
+      <mat-spinner color="warn"></mat-spinner>
+    </div>
+    <br>
+    <p style="color: white">Checking your login sessions!!!</p>
+  </div>
+</div>
+
+<div *ngIf="!isLogin" class="wrapper">
+
+  <!-- Nav -->
+  <div class="navbar-wrapper" style="margin-bottom:70px;">
+    <div class="container-fluid">
+      <nav class="navbar navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+              aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <h3>Login</h3>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <!-- End of Nav -->
+  <div class="container" style="margin-top:70px;">
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <form [formGroup]="form" (submit)="onLoginSubmit()">
+      <div class="col-md-4">
+        <!-- Username Field -->
+        <div class="form-group">
+          <label for="username">Username</label>
+          <div [ngClass]="{'has-error': form.controls.username.errors && form.controls.username.dirty, 'has-success': form.controls.username.valid && form.controls.username.dirty }">
+            <input class="form-control" [(ngModel)]="data.username" type="text" name="username" formControlName="username" />
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.username.errors?.required && form.controls.username.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.username.errors?.ValidateUsername && form.controls.username.dirty">
+                Username is not valid.
+              </li>
+              <li *ngIf="form.controls.username.errors?.minlength && form.controls.username.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Password Field  -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div [ngClass]="{'has-error': form.controls.password.errors && form.controls.password.dirty, 'has-success': form.controls.password.valid && form.controls.password.dirty }">
+            <input class="form-control" [(ngModel)]="data.password" type="password" name="password" formControlName="password" />
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.password.errors?.required && form.controls.password.dirty">
+                This field is required.</li>
+
+              <li *ngIf="form.controls.password.errors?.ValidatePassword && form.controls.password.dirty">
+                Password is not valid.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <!-- <button mat-button>Click me!</button> -->
+        <input mat-raised-button color="primary" [disabled]="!form.valid || processing" class="btn btn-primary btn-md" type="submit"
+          value="Login" />
+      </div>
+    </form>
+  </div>
+</div>
+<app-subfooter *ngIf="!isLogin"></app-subfooter>

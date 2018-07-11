@@ -1,0 +1,136 @@
+<div class="container-fluid">
+
+  <div class="row show-hide-message" style="margin-top:10px;">
+    <div [ngClass]="messageClass">
+      {{ message }}
+    </div>
+  </div>
+
+  <form [formGroup]="form" (submit)="searchPO()">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-12" style="margin-top:10px;">
+          <div class="col-sm-6">
+            <input type="submit" class="form-control" type="text" name="search" [(ngModel)]="search" formControlName="search" placeholder="*Search {{filterby}}"
+            />
+          </div>
+          <div class="col-sm-2">
+            <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">
+              {{caption}}
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a routerLink="/admin/item/item-list" (click)="filterBy('name')">Item Name</a>
+              </li>
+              <li>
+                <a routerLink="/admin/item/item-list" (click)="filterBy('stocks')">Stocks</a>
+              </li>
+              <li>
+                <a routerLink="/admin/item/item-list" (click)="filterBy('price')">Price</a>
+              </li>
+              <li>
+                <a routerLink="/admin/item/item-list" (click)="filterBy('itemcode')">Item Code</a>
+              </li>
+            </ul>
+          </div>
+          <div id="search" class="col-sm-2">
+            <a class="btn btn-danger" style=" width:100%; margin:0px;" (click)="searchPO()">Search</a>
+          </div>
+          <div id="search" class="col-sm-2">
+            <a class="btn btn-success" style=" width:100%; margin:0px;" (click)="downLoadPDF()">Print</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <mat-expansion-panel style="margin-bottom:20px;" [style.background-color]="'#222'" [expanded]="!panelOpenState" (opened)="panelOpenState = false"
+    (closed)="panelOpenState = true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Item List
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div style="padding-top:20px; ">
+      <div class="panel panel-default" style="min-height:auto; background-color:#222;">
+
+        <div class="example-container mat-elevation-z8">
+          <!-- <div class="filter-header">
+            <mat-form-field style="min-width:350px; padding-left: 20px;">
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search...">
+            </mat-form-field>
+            <div class="col-sm-2" style="float:right;margin-right:30px;padding-top:20px;">
+              <a class="btn btn-success" style=" width:100%; margin:0px;" (click)="downLoadPDF()">Print</a>
+            </div>
+          </div> -->
+          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
+
+          <mat-table [style.min-height]="message == '' ? '450px' : '48px'" *ngIf="!hasLoaded" #table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="no">
+              <mat-header-cell style="max-width: 50px" *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
+              <mat-cell class="cell" style="max-width: 50px" *matCellDef="let element; let i=index" (click)="openDialog(element.id)"> {{i+1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+              <mat-header-cell style="max-width: 300px; min-width: 300px;" *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-cell class="cell" style="max-width: 300px;min-width: 300px;" *matCellDef="let element">
+                <span>{{element.name}} </span>
+              </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="stocks">
+              <mat-header-cell style="max-width: 80px; " *matHeaderCellDef mat-sort-header> Stocks </mat-header-cell>
+              <mat-cell class="cell text-center" style="max-width: 80px" *matCellDef="let element"> {{element.stocks}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <mat-header-cell style="max-width: 100px; min-width: 100px;text-align:right;" *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+              <mat-cell class="cell text-right" style="max-width: 100px;min-width: 100px;" *matCellDef="let element"> {{element.price}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="itemcode">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Item Code </mat-header-cell>
+              <mat-cell class="cell text-center" *matCellDef="let element"> {{element.itemcode}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Description </mat-header-cell>
+              <mat-cell class="cell" *matCellDef="let element"> {{element.description}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+              <mat-header-cell style="max-width: 200px; " *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+              <mat-cell style="max-width: 200px; " *matCellDef="let element">
+                <br>
+                <div class="col-sm-10">
+                  <a class="btn btn-info" routerLink="/admin/item/show/{{element.id}}">Details</a>
+                </div>
+                <div class="col-sm-10">
+                  <a *ngIf=" global.userType != 'Marketing'" class="btn btn-success" routerLink="/admin/item/edit/{{element.id}}">Edit</a>
+                </div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </mat-table>
+
+          <!-- <div *ngIf="!hasLoaded" style="min-height:100px;">
+            <mat-spinner style="margin: 10% auto;"></mat-spinner>
+          </div> -->
+
+          <mat-toolbar *ngIf="message != '' && hasLoaded" style="min-height:450px;">
+            <h2 class="message" style="margin: auto auto;">{{message}}</h2>
+          </mat-toolbar>
+          <!-- mat-pagination -->
+          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
+
+        </div>
+      </div>
+    </div>
+
+  </mat-expansion-panel>
+</div>

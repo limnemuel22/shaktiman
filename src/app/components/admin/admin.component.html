@@ -1,0 +1,139 @@
+<!-- NAVBAR -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a *ngIf="menu == 'admin'" class="navbar-brand" routerLink="/admin">Admin Menu</a>
+        <a *ngIf="menu == 'reports'" class="navbar-brand" routerLink="/admin/reports">Reports Menu</a>
+        <a *ngIf="menu == 'accounting'" class="navbar-brand" routerLink="/admin/accounting">Accounting Menu</a>
+        <a *ngIf="menu == 'documents'" class="navbar-brand" routerLink="/admin/documents">Documents Menu</a>
+        <a *ngIf="menu == 'item'" class="navbar-brand" routerLink="/admin/item">Item Menu</a>
+        <a *ngIf="menu == 'user'" class="navbar-brand" routerLink="/admin/user">User Menu</a>
+        <a *ngIf="menu == 'purchase'" class="navbar-brand" routerLink="/admin/purchase">Purchasing Menu</a>
+        <a *ngIf="menu == 'clients'" class="navbar-brand" routerLink="/admin/clients">Clients Menu</a>
+        <a *ngIf="menu == 'agent'" class="navbar-brand" routerLink="/admin/agent">Agents Menu</a>
+        <a *ngIf="menu == 'deliver'" class="navbar-brand" routerLink="/admin/deliver">Delivery Menu</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+        <!-- <ul class="nav navbar-nav">
+            <li role="presentation"><a routerLink="item-list" routerLinkActive="active">List</a></li>
+            <li role="presentation"><a routerLink="item-add" routerLinkActive="active">Add</a></li>	
+        </ul> -->
+        <ul class="nav navbar-nav navbar-right">
+            <!-- LOGOUT BUTTON -->
+            <li *ngIf="menu == 'admin'"><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="logout()">Logout</a></li>
+
+            <!-- ITEM MENU -->
+            <li *ngIf="menu == 'accounting'"><a routerLink="/admin/accounting/discount" routerLinkActive="active">Discount</a></li>
+            <li *ngIf="menu == 'accounting'"><a routerLink="/admin/accounting/payment-add" routerLinkActive="active">Payment</a></li>	
+            <li *ngIf="menu == 'accounting'"><a routerLink="/admin/accounting/payment-list" routerLinkActive="active">List</a></li>
+
+            <!-- ITEM MENU -->
+            <li *ngIf="menu == 'reports'"><a routerLink="/admin/reports/sales" routerLinkActive="active">Sales</a></li>
+
+            <!-- ITEM MENU -->
+            <!-- <li *ngIf="menu == 'documents'"><a routerLink="/admin/documents/packing-list" routerLinkActive="active">Packing List</a></li>
+             --><li *ngIf="menu == 'documents'"><a routerLink="/admin/documents/import" routerLinkActive="active">Import</a></li>
+            <!-- ITEM MENU -->
+            <li *ngIf="menu == 'item' && userType != 'Marketing' && userType != 'Accounting'"><a routerLink="/admin/item/item-add" routerLinkActive="active">Add</a></li>	
+            <li *ngIf="menu == 'item'"><a routerLink="/admin/item/item-list" routerLinkActive="active">List</a></li>
+            
+            <!-- CLIENT MENU -->
+            <li *ngIf="menu == 'clients' && userType != 'Marketing' && userType != 'Accounting'"><a routerLink="/admin/clients/clients-add" routerLinkActive="active">Add</a></li>	
+            <li *ngIf="menu == 'clients'"><a routerLink="/admin/clients/clients-list" routerLinkActive="active">List</a></li>
+
+            <!-- AGENT MENU -->
+            <li *ngIf="menu == 'agent' && userType != 'Marketing' && userType != 'Accounting'"><a routerLink="/admin/agent/agent-add" routerLinkActive="active">Add</a></li>	
+            <li *ngIf="menu == 'agent'"><a routerLink="/admin/agent/agent-list" routerLinkActive="active">List</a></li>
+
+            <!-- USER MENU -->
+            <li *ngIf="menu == 'user' && userType != 'Marketing' && userType != 'Accounting'"><a routerLink="/admin/user/user-add" routerLinkActive="active">Add</a></li>	
+            <li *ngIf="menu == 'user'"><a routerLink="/admin/user/user-list" routerLinkActive="active">List</a></li>
+
+            <!-- PURCHASE MENU -->
+            <li *ngIf="menu == 'purchase' && userType != 'Marketing' && userType != 'Accounting'"><a routerLink="/admin/purchase/purchase-dr" routerLinkActive="active">D.R. Add</a></li>	
+            <li *ngIf="menu == 'purchase'"><a routerLink="/admin/purchase/purchase-list" routerLinkActive="active">List</a></li>
+            
+            <!-- BACK BUTTON -->
+            <li *ngIf="menu != 'admin'" >
+                <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" style="padding:5px 10px 10px 10px; " (click) = "goBack()"><i class="fa fa-arrow-left fa-2x"></i></a></li>
+        </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+    <!-- NAVBAR END -->
+
+<!-- ADMIN MENU -->
+
+<div *ngIf="menu == 'admin'" id="content">
+        <div class="container" >
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="nav nav-justified" id="iconbar">
+                            <li ><a class="text-center color-1" (click)="goTo('item')"><i class="fa fa-shopping-cart fa-5x"></i> <br>Item</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">     
+                        <ul class="nav nav-justified" id="iconbar">
+                            <li><a class="text-center color-1" (click)="goTo('purchase')"><i class="fa fa-shopping-basket fa-5x"></i> <br>Purchasing</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="nav nav-justified" id="iconbar">
+                                <li><a class="text-center color-1" (click)="goTo('deliver')"><i class="fa fa-truck fa-5x"></i> <br>Delivery</a></li>
+                           
+                        </ul>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="nav nav-justified" id="iconbar">
+                            <li><a class="text-center color-1" (click)="goTo('clients')"><i class="fa fa-users fa-5x"></i> <br>Clients</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">     
+                        <ul class="nav nav-justified" id="iconbar">
+                            <li><a class="text-center color-1" (click)="goTo('agent')"><i class="fa fa-address-card-o fa-5x"></i> <br>Agents</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="nav nav-justified" id="iconbar">
+                                <li><a class="text-center color-1" (click)="goTo('reports')"><i class="fa fa-book fa-5x" ></i> <br>Reports</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <div class="col-md-4">
+                        <ul class="nav nav-justified" id="iconbar">
+                                <li><a class="text-center color-1" (click)="goTo('accounting')"><i class="fa fa-bank fa-5x"></i> <br>Accounting</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">     
+                        <ul class="nav nav-justified" id="iconbar">
+                                <li><a class="text-center color-1" (click)="goTo('documents')"><i class="fa fa-file-text fa-5x"></i> <br>Documents</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">     
+                        <ul class="nav nav-justified" id="iconbar">
+                            <li><a class="text-center color-1" (click)="goTo('user')"><i class="fa fa-user-circle-o fa-5x"></i> <br>User</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- ADMIN MENU END -->
+<div id="menu" *ngIf="menu != 'admin'">
+    <router-outlet></router-outlet>
+</div>
+
+<app-subfooter></app-subfooter>
+

@@ -1,0 +1,293 @@
+
+<div id="content">
+    <div class="container">
+      <div *ngIf = "rotary" class="col-md-12">
+          <a id="select"  class="btn btn-warning" (click)="goto('mini-series')">Mini Series</a>
+          <a  id="select" class="btn btn-warning" (click)="goto('regular-series')">Regular</a>
+          <a  id="select" class="btn btn-warning" (click)="goto('semi-champion-series')">Semi-Champion</a>
+          <a  id="select" class="btn btn-warning" (click)="goto('champion-series')">Champion</a>
+      </div>
+        <!-- Container -->
+        <div class="row">
+            <!-- Row -->
+            <div class="col-md-6">
+                <!-- 1st Col-md-6 -->
+                <p class="sub-title">{{subtitle}}</p>
+                <!-- Sub Title Product (if any ??) -->
+                <h2 class="product">{{productName}}</h2>
+                <!-- Product Name Highligth -->
+                <div class="back-btn">
+                    <a routerLink=""> &lt; Back </a>
+                    <!-- Back Button Return (if any ??) -->
+                </div>
+                <!-- Product Model -->
+                <div class="model">
+                    <h5>Model: </h5>
+                    <div class="model-type">
+                      <div *ngFor="let srt of srts">
+                          <p >{{srt}}                                
+                              <br>
+                          </p>
+                      </div>
+                        
+                    </div>
+                </div>
+                <!-- /End Product Model -->
+            </div>
+            <!-- End of 1st Col-md-6 -->
+
+            <!-- Start 2nd Col-md-6 -->
+            <div class="col-md-6">
+                <!-- product carousel -->
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false" >
+               
+                  <div  class="carousel-inner" style=" width:100%; height: 400px !important;">
+                      <div class="item active">
+                        <img id="image1"  alt="" style="width:100%;  height: 400px;">
+                      </div>
+                
+                      <div class="item">
+                        <img id="image2"  alt="" style="width:100%;  height: 400px;">
+                      </div>
+                    
+                      <div class="item">
+                        <img id="image3" alt="" style="width:100%;  height: 400px;">
+                      </div>
+
+                      <div class="item" style="background-image: url('http://placehold.it/1900x1080')">
+                          <iframe id="videoURL" width="100%" height="400px"  frameborder="0" allowfullscreen></iframe>
+                      </div>
+                    </div>
+
+                    <div class="print">
+                        <a href="#">
+                            <i class="fa fa-print" aria-hidden="true"></i> Print</a>
+                        <!-- Print Button link (if any ??) -->
+                    </div>
+
+                <!-- Content Navi Tabs for carousel  -->
+                <ul  class="nav nav-pills" style="margin-top:10px;">
+                    <li class="active">
+                      <a  href="#photo" data-toggle="tab" >Photos</a>
+                    </li>
+                    <li><a href="#video" data-toggle="tab" >Videos</a>
+                    </li>
+                  </ul>
+              
+                    <div class="tab-content clearfix" style="min-height:120px;">
+                      <div class="tab-pane active" id="photo">
+                          <div class="col-md-12" >
+                              <a class="col-md-3" data-target="#myCarousel" data-slide-to="0">
+                                  <div id="tabimage1" style=" background-size:cover;  width:100px;height:100px; margin:10px; background-repeat: no-repeat; border: 1px solid #000;">
+                                  </div>
+                              </a>
+                              <a class="col-md-3" data-target="#myCarousel" data-slide-to="1">
+                                  <div id="tabimage2" style=" background-size:cover;  width:100px;height:100px; margin:10px; background-repeat: no-repeat; border: 1px solid #000;">
+                                  </div>
+                              </a>
+                              <a class="col-md-3" data-target="#myCarousel" data-slide-to="2">
+                                  <div id="tabimage3" style=" background-size:cover; width:100px;height:100px; margin:10px; background-repeat: no-repeat; border: 1px solid #000;">
+                                  </div>
+                              </a>
+                          </div>
+                      </div>
+                      <div class="tab-pane" id="video">
+                          <div class="col-md-12" >
+                              <a data-target="#myCarousel" data-slide-to="3">
+                                  <div id="tabvideo" class="col-md-4" style=" background-size:cover; width:100px;height:100px; margin:10px; background-repeat: no-repeat; border: 1px solid #000;">
+                                  </div>
+                              </a>
+                          </div>
+                      </div>
+                    </div>
+                <!-- /End Tab Content -->
+              </div>
+            </div>
+            <!-- /End of 2nd Row col-md-6 -->
+        </div>
+        <!-- /End of Row -->
+    </div>
+    <!-- /End of Product Content -->
+
+    <!-- Start Descriptions of Product -->
+    <section>
+        <div id="tab1"  class="container">	
+            <ul class="nav nav-pills">
+                  <li class="active"><a  href="#1a" data-toggle="tab">Description</a></li>
+                  <li><a href="#2a" data-toggle="tab">Advantages</a></li>
+                  <li><a href="#3a" data-toggle="tab">Technical Specifications</a></li>
+                  <li><a href="#4a" data-toggle="tab">Download</a></li>
+                </ul>
+            
+                  <div class="tab-content clearfix">
+                    <div *ngIf="router.url != '/products/post-hole-digger'" class="tab-pane active" id="1a">
+                          <p *ngFor="let d of descriptions">{{d}}</p>
+                    </div>
+                    <div *ngIf="router.url == '/products/post-hole-digger'" class="tab-pane active" id="1a"></div>
+                    <div *ngIf="router.url != '/products/post-hole-digger'" class="tab-pane" id="2a">
+                        <p *ngFor="let a of advantages">
+                          <i class="fa fa-check-square-o" aria-hidden="true" style="color: #EB6420;"></i> &nbsp; {{a}}
+                        <p>
+                    </div>
+                    <div *ngIf="router.url == '/products/post-hole-digger'" class="tab-pane" id="2a"></div>
+                    <div class="tab-pane" id="3a" style="font-size: 80%;">
+                    </div>
+                      <div class="tab-pane" id="4a" >
+                          <div class="brochure">
+                              <a href="{{filePath}}" download="{{filename}}">
+                                  <img src="assets/img/pdf.png" alt=""> </a> {{productName}} - Brochure
+                          </div>   
+                    </div>
+                  </div>
+              </div>
+    </section>
+</div>
+
+<footer>
+        <!-- Container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- 1st Col-lg-6 col-md-6 -->
+                <div class="col-lg-6 col-md-6">
+                    <h3 class="footer-title">Contact Us</h3>
+                    <p class="footer-com"> COMBUSTION RETROFITTING CO.. INC</p>
+                    <div class="row">
+                        <!-- 2nd Row Inside for col separaton -->
+                        <div class="col-lg-6 col-md-12">
+                            <!-- 1st col inside another separate -->
+                            <div class="footer-nav">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <p>
+                                    No. 916 Cabanatuan-Palayan road,
+                                    <br> Bantug Norte, Cabanatuan City
+                                    <br> Nueva Ecija, 3100 Philippines
+                                </p>
+                            </div>
+    
+                            <div class="footer-nav">
+                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                <p>
+                                    Tel. No.
+                                    <br> (044) 940-0706
+                                    <br> Cel. No.
+                                    <br> +63-9953198-924
+                                </p>
+                            </div>
+                        </div>
+                        <!-- /End 1st col inside another separate -->
+    
+                        <div class="col-lg-6 col-md-12">
+                            <!-- 2nd col inside another separate -->
+                            <div class="footer-nav">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                <p>
+                                    sales.shaktiman@comretro.com
+                                    <br> dakila.palomo@comretro.com
+                                    <br> donpaul.palomo@hamadaboilerindo.com
+                                    <br> marie.palomo@comretro.com
+                                    <br> johnlouieborja@gmail.com
+                                    <br> nelmorris.duatin@comretro.com
+                                    <br> leejay.ortiz@comretro.com
+                                    <br>
+                                </p>
+                            </div>
+    
+                        </div>
+                        <!-- /End 2nd col inside another separate -->
+                    </div>
+                    <!-- /End 2nd Row Inside for col separaton -->
+    
+    
+                </div>
+                <!-- /End 1st Col-lg-6 col-md-6 -->
+    
+                <!-- 2nd Col-lg-6 col-md-6 -->
+                <div class="col-lg-6 col-md-6">
+                    <ul class="list-unstyled clear-margins">
+                        <li class="widget-container widget_nav_menu">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h3 class="title-widget">Products</h3>
+                                    <ul>
+                                        <li>
+                                            <a routerLinkActive="active"  routerLink="/products/mini-series"> Rotary Tiller</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/power-harrow"> Power Harrow</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/roto-seed-drill" > Roto Seed Drill</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/post-hole-digger"> Post Hole Digger</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/fertilizer-broadcaster"> Fertilizer Broadcaster</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/mobile-shredder"> Mobile Shredder</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/compost-spreader"> Compost Spreader</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/round-baler"> Round Baler</a>
+                                        </li>
+                                    </ul>
+    
+                                </div>
+                                <div class="col-sm-4">
+                                    <h3 class="title-widget">&nbsp;</h3>
+                                    <ul>
+                                        <li>
+                                            <a routerLinkActive="active" hrouterLink="/products/hay-rake"> Hay Rake</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/rotary-slasher"> Rotary Slasher</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/self-propelled-platform"> Self Propelled Platform</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/square-baler"> Square Baler</a>
+                                        </li>
+                                        <li>
+                                            <a routerLinkActive="active" routerLink="/products/boom-sprayer"> Boom Sprayer</a>
+                                        </li>
+                                    </ul>
+                                </div>
+    
+                                <div class="col-sm-4">
+                                    <ul class="list-unstyled clear-margins">
+                                        <li class="widget-container widget_recent_news">
+                                            <h3 class="title-widget">SOCIAL</h3>
+                                            <div class="social-icons">
+                                                <a href="#">
+                                                    <i class="fa fa-facebook-square fa-3x social-fb" id="social"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fa fa-twitter-square fa-3x social-tw" id="social"></i>
+                                                </a>
+                                                <a href="#">
+                                                    <i class="fa fa-instagram fa-3x social-in" id="social"></i>
+                                                </a>
+                                            </div>
+                                            <div class="cost-support">
+                                                <img src="assets/img/support.png" alt="">
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /End 2nd Col-lg-6 col-md-6 -->
+    
+            </div>
+            <!-- /End Row -->
+        </div>
+        <!-- /End Container -->
+    </footer>
+

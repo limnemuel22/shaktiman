@@ -1,0 +1,103 @@
+<div class="container">
+<div class="panel panel-default" *ngIf=transaction>
+  <div class="panel-heading">Purchase Order Details Form : You can see the detail information of selected purchase order here.</div>
+  <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal" >
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Item Name : </label>
+          <div class="col-sm-3">
+            <p class="form-control" style="height: 10%">{{transaction.name}}</p> 
+          </div>
+          <label class="col-sm-2 control-label">Price : </label>
+          <div class="col-sm-3">
+            <p class="form-control">{{transaction.price}}</p> 
+          </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Stocks : </label>
+            <div class="col-sm-3">
+              <p class="form-control">{{transaction.stocks}}</p> 
+            </div>
+            <label class="col-sm-2 control-label">Model : </label>
+            <div class="col-sm-3">
+              <p class="form-control">{{transaction.model}}</p> 
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Item Sold : </label>
+          <div class="col-sm-3">
+            <p class="form-control">{{transaction.itemSold}}</p> 
+          </div>
+      </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Description : </label>
+            <div class="col-sm-8">
+              <p style="height:60px" class="form-control">{{transaction.description}}</p> 
+            </div>
+        </div>
+        <hr>
+        <table class="table table-bordered" >
+          <thead>
+            <tr class="text-center" style="background-color:dimgrey; color:white;">
+              <td>Delivery Date</td>
+              <td>Batch No.</td>
+              <td class="one">Serial No.</td>
+              <td class="two">Reference No.</td>
+              <td class="three">Chasis No.</td>
+              <td class="four">Engine</td>
+              <td >Supplier</td>
+            </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let deliver of delivery">
+                <td>{{deliver.deliveryDate}}</td>
+                <td>{{deliver.batch}}</td>
+                <td class="one">{{deliver.serialNo}}</td>
+                <td class="two">{{deliver.refNo}}</td>
+                <td class="three">{{deliver.chasis}}</td>
+                <td class="four">{{deliver.engine}}</td>
+                <td>{{deliver.supplier}}</td>
+             </tr>
+          </tbody>
+        </table>
+        <!-- BACK BUTTON -->
+        <hr>
+        <h3 class="col-md-offset-1">Purchase History</h3>
+        <br>
+        <table class="table table-bordered">
+          <thead>
+            <tr class="text-center" style="background-color:dimgrey; color:white;">
+              <td>D.R. No.</td>
+              <td>Client Name</td>
+              <td >Quantity</td>
+              <td >Item name</td>
+              <td class="one">DR Date</td>
+              <td class="two">Serial Number</td>
+            </tr>
+          </thead>
+          <tbody style="background-color:#fff;">
+            <tr *ngFor="let transaction of transactions">
+              <td class="text-center">{{transaction.drNo}}</td>
+              <td>{{transaction.clientName}}</td>
+              <td class="text-center">{{transaction.qty}}</td>
+              <td>{{transaction.itemName}}</td>
+              <td class="one text-center">{{transaction.drDate}}</td>
+              <td class="two text-center">{{transaction.serialNo}}</td>
+           </tr>
+          </tbody>
+        </table>
+        <hr>
+        <div class="form-group">
+            <div class="row">
+              <div class="col-sm-3 col-sm-offset-1">
+             <a  class="btn btn-danger" (click)="goBack()">Back</a>
+             <a  class="btn btn-success" (click)="downLoadPDF()">Print</a>
+            </div>
+        </div>
+        </div>
+    </form>
+  </div>
+</div>
+</div>

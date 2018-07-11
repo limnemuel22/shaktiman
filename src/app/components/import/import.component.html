@@ -1,0 +1,192 @@
+<div class="container" id="content">
+  <div class="panel panel-default">
+    <div class="panel-heading">Import List Form : You can generate a packing list here.</div>
+
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal" (submit)="pdf()">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Title: </label>
+          <div class="col-sm-8" [ngClass]="{'has-error': form.controls.title.errors && form.controls.title.dirty, 'has-success': form.controls.title.valid && form.controls.title.dirty }">
+            <input type="text" class="form-control" formControlName="title" [(ngModel)]="title" name="title" (blur)="saveFields()" (keyup)="saveFields()">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.title.errors?.required && form.controls.title.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.title.errors?.validateNumberAndLettersAndSpecial && form.controls.title.dirty">
+                This field only accepts numbers, letters and some basic special characters.
+              </li>
+              <li *ngIf="form.controls.title.errors?.maxlength && form.controls.title.dirty">
+                Max length is only 50 characters.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Date :</label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.date.errors && form.controls.date.dirty, 'has-success': form.controls.date.valid && form.controls.date.dirty }">
+            <input type="text" class="form-control" placeholder="MM/DD/YYYY" formControlName="date" [(ngModel)]="date" name="date" (blur)="saveFields()"
+              (keyup)="saveFields()">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.date.errors?.validateDate && form.controls.date.dirty">
+                Invalid date format must be Month/Day/Year.
+                <br> Example : 01/01/2000.
+              </li>
+              <!-- <li *ngIf="form.controls.date.errors?.minlength && form.controls.date.dirty">
+                Must be 8 characters long.
+              </li> -->
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Prepared by :</label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.preparedBy.errors && form.controls.preparedBy.dirty, 'has-success': form.controls.preparedBy.valid && form.controls.preparedBy.dirty }">
+            <input type="text" class="form-control" formControlName="preparedBy" [(ngModel)]="preparedBy" name="preparedBy" (blur)="saveFields()"
+              (keyup)="saveFields()">
+
+            <ul class="help-block">
+              <li *ngIf="form.controls.preparedBy.errors?.required && form.controls.preparedBy.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.preparedBy.errors?.validateDate && form.controls.preparedBy.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Currency : </label>
+          <div class="col-sm-3">
+            <select class="form-control" formControlName="sign" [(ngModel)]="sign" name="sign" id="sign" (blur)="saveFields()">
+              <option *ngFor="let c of currency" value='{{c}}' id='{{c}}'>{{c}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Remarks : </label>
+          <div class="col-sm-8">
+            <textarea class="form-control" cols="30" rows="4" formControlName="remarks" [(ngModel)]="remarks" name="remarks" (blur)="saveFields()"
+              (keyup)="saveFields()"></textarea>
+          </div>
+        </div>
+
+
+
+        <hr>
+        <br>
+        <div class="row show-hide-message">
+          <div [ngClass]="messageClassItem">
+            {{ messageItem }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Quantity : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.quantity.errors && form.controls.quantity.dirty, 'has-success': form.controls.quantity.valid && form.controls.quantity.dirty }">
+            <input type="text" class="form-control" formControlName="quantity" [(ngModel)]="model.quantity" name="quantity">
+            <ul class="help-block">
+              <li *ngIf="form.controls.quantity.errors?.required && form.controls.quantity.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.quantity.errors?.validateNumber && form.controls.quantity.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.quantity.errors?.maxlength && form.controls.quantity.dirty">
+                Max length is only 10 characters.
+              </li>
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Unit : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.unit.errors && form.controls.unit.dirty, 'has-success': form.controls.unit.valid && form.controls.unit.dirty }">
+            <input type="text" class="form-control" formControlName="unit" [(ngModel)]="model.unit" name="unit">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.unit.errors?.required && form.controls.unit.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.unit.errors?.validateNumberAndLetters && form.controls.unit.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.unit.errors?.maxlength && form.controls.unit.dirty">
+                Max length is only 20 characters.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Description : </label>
+          <div class="col-sm-8">
+            <textarea class="form-control" cols="30" rows="4" formControlName="description" [(ngModel)]="model.description" name="description"></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Price : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.price.errors && form.controls.price.dirty, 'has-success': form.controls.price.valid && form.controls.price.dirty }">
+            <input type="text" class="form-control" formControlName="price" [(ngModel)]="model.price" name="price">
+            <ul class="help-block">
+              <li *ngIf="form.controls.price.errors?.required && form.controls.price.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.price.errors?.validateNumber && form.controls.price.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+            </ul>
+            <div style="margin-top:10px;">
+              <a class="btn btn-success" (click)="addItem()">Add Item to List</a>
+            </div>
+          </div>
+        </div>
+
+        <hr>
+
+        <table class="table table-bordered" style="width:700px; table-layout: fixed; word-wrap:break-word;">
+          <thead>
+            <tr class="text-center" style="background-color:dimgrey; color:white;">
+              <td width=80>QTY</td>
+              <td width=150 class="one">UNIT</td>
+              <td width=400>DESCRIPTION</td>
+              <td width=150 class="two">PRICE</td>
+              <td width=150 class="two">TOTAL</td>
+              <td width=150 align="center">ACTION</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of items">
+              <td width=80 class="text-center">{{item.quantity}}</td>
+              <td width=150 class="one text-center">{{item.unit}}</td>
+              <td width=400>{{item.description}}</td>
+              <td width=150 class="two text-center">{{item.price}}</td>
+              <td width=150 class="two text-center">{{item.total}}</td>
+              <td width=150 class="text-center">
+                <a class="btn btn-danger" (click)="deleteItem(item.description)">Delete</a>
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+
+        <!-- [disabled]="!form.valid || processing" -->
+        <div class="form-group">
+          <div class="col-sm-offset-9 col-sm-3 text-right" style="padding-right:40px;">
+            <!-- <button  type="submit" class="btn btn-success" >Save PDF</button> -->
+            <a class="btn btn-success" (click)="pdf()">Save PDF</a>
+            <a class="btn btn-danger" (click)="clearItems()">Clear</a>
+          </div>
+
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
