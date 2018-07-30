@@ -14,7 +14,7 @@ import { DatabaseService } from "./services/database.service";
 import { MaterialModule } from "./modules/material.module";
 
 // Global
-import { Global } from "./modules/global";
+import { GlobalService } from "./services/global.service";
 
 // Guards
 import { AuthGuard } from "./guards/auth.guard";
@@ -124,7 +124,7 @@ import { PurchaseshowComponent } from "./components/purchaseshow/purchaseshow.co
     MaterialModule,
     HttpClientModule
   ],
-  providers: [DatabaseService, AuthGuard, NotAuthGuard, Global],
+  providers: [DatabaseService, AuthGuard, NotAuthGuard, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

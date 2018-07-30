@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 import { Router } from "@angular/router";
 declare const $;
 
@@ -25,7 +25,7 @@ export class DiscountComponent implements OnInit {
 
   constructor(
     private dbService: DatabaseService,
-    public global: Global,
+    public global: GlobalService,
     public router: Router,
     private formbuilder: FormBuilder
   ) {

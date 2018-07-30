@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 import { Router } from "@angular/router";
 import { Data } from "../../model/schema";
 import * as jsPDF from "jspdf";
@@ -23,7 +23,7 @@ export class PaymentlistComponent implements OnInit {
   previousBal;
   constructor(
     private dbService: DatabaseService,
-    public global: Global,
+    public global: GlobalService,
     public router: Router,
     private formbuilder: FormBuilder
   ) {
@@ -31,8 +31,7 @@ export class PaymentlistComponent implements OnInit {
 
     this.payments = this.global.payments == null ? null : this.global.payments;
     const interval = setInterval(() => {
-      this.payments =
-        this.global.payments == null ? null : this.global.payments;
+      this.payments = this.global.payments == null ? null : this.global.payments;
       if (this.router.url !== "/admin/accounting/payment-list") {
         clearInterval(interval);
       }
@@ -110,12 +109,8 @@ export class PaymentlistComponent implements OnInit {
 
     this.previousBal =
       discount > 0
-        ? (payment + balance)
-            .toLocaleString("en-us", { minimumFractionDigits: 2 })
-            .toString()
-        : (payment + balance)
-            .toLocaleString("en-us", { minimumFractionDigits: 2 })
-            .toString();
+        ? (payment + balance).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString()
+        : (payment + balance).toLocaleString("en-us", { minimumFractionDigits: 2 }).toString();
 
     this.dbService.get("siPDF", id).subscribe(data => {
       this.downLoadPDF(data);
@@ -187,11 +182,7 @@ export class PaymentlistComponent implements OnInit {
 
           doc.text(13, start, count.toString(), "center");
           doc.text(23, start, qty);
-          for (
-            let i = 0, charsLength = engineNumbers.length;
-            i < charsLength;
-            i += num
-          ) {
+          for (let i = 0, charsLength = engineNumbers.length; i < charsLength; i += num) {
             // chunks.push(engineNumbers.substring(i, i + num));
             doc.text(45, start, engineNumbers.substring(i, 12), "center");
           }
@@ -213,11 +204,7 @@ export class PaymentlistComponent implements OnInit {
             "center"
           );
 
-          for (
-            let i = 0, charsLength = description.length;
-            i < charsLength;
-            i += num
-          ) {
+          for (let i = 0, charsLength = description.length; i < charsLength; i += num) {
             chunks.push(description.substring(i, i + num));
           }
 

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import * as jsPDF from "jspdf";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 import { Router } from "@angular/router";
 import { Data } from "../../model/schema";
 import { MatPaginator, MatTableDataSource, MatSort } from "@angular/material";
@@ -48,7 +48,7 @@ export class ItemlistComponent implements OnInit {
 
   constructor(
     private dbService: DatabaseService,
-    public global: Global,
+    public global: GlobalService,
     public router: Router,
     private formbuilder: FormBuilder
   ) {

@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { Router } from "@angular/router";
 import { PlatformLocation } from "@angular/common";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 
 @Component({
   selector: "app-admin",
@@ -17,27 +17,24 @@ export class AdminComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private router: Router,
-    public global: Global,
+    public global: GlobalService,
     private location: PlatformLocation
   ) {
     this.dbService.get("user", localStorage.getItem("id")).subscribe(data => {
-      //console.log(data);
+      // console.log(data);
       this.userType = this.global.usertype = data[0].usertype;
       this.global.employeeName = data[0].employeeName;
     });
 
     this.location.onPopState(() => {
       setTimeout(() => {
-        var path = this.router.url;
+        const path = this.router.url;
         this.router.navigate([path]);
       }, 100);
     });
 
     this.router.events.subscribe(event => {
-      var url =
-        event["url"] == undefined
-          ? ""
-          : event["url"].replace("/admin", "").split("/")[1];
+      const url = event["url"] === undefined ? "" : event["url"].replace("/admin", "").split("/")[1];
       this.changeNavbar(url);
     });
 
@@ -50,69 +47,60 @@ export class AdminComponent implements OnInit {
     this.global.getPDF();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   goTo(path) {
-    //console.log(this.userType);
-    this.userType = this.userType == undefined ? this.global.usertype : this.userType;
-    if (
-      path == "accounting" &&
-      (this.userType == "Admin" || this.userType == "Accounting")
+    // console.log(this.userType);
+    this.userType = this.userType === undefined ? this.global.usertype : this.userType;
+    if (path === "accounting" && (this.userType === "Admin" || this.userType === "Accounting")) {
+      this.router.navigate(["/admin/" + path]);
+      this.menu = path;
+    } else if (
+      path === "item" &&
+      (this.userType === "Admin" ||
+        this.userType === "Accounting" ||
+        this.userType === "Purchasing" ||
+        this.userType === "Marketing")
     ) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
     } else if (
-      path == "item" &&
-      (this.userType == "Admin" ||
-        this.userType == "Accounting" ||
-        this.userType == "Purchasing" ||
-        this.userType == "Marketing")
+      path === "purchase" &&
+      (this.userType === "Admin" ||
+        this.userType === "Accounting" ||
+        this.userType === "Purchasing" ||
+        this.userType === "Marketing")
     ) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
     } else if (
-      path == "purchase" &&
-      (this.userType == "Admin" ||
-        this.userType == "Accounting" ||
-        this.userType == "Purchasing" ||
-        this.userType == "Marketing")
+      path === "agent" &&
+      (this.userType === "Admin" ||
+        this.userType === "Accounting" ||
+        this.userType === "Purchasing" ||
+        this.userType === "Marketing")
     ) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
     } else if (
-      path == "agent" &&
-      (this.userType == "Admin" ||
-        this.userType == "Accounting" ||
-        this.userType == "Purchasing" ||
-        this.userType == "Marketing")
+      path === "clients" &&
+      (this.userType === "Admin" ||
+        this.userType === "Accounting" ||
+        this.userType === "Purchasing" ||
+        this.userType === "Marketing")
     ) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
-    } else if (
-      path == "clients" &&
-      (this.userType == "Admin" ||
-        this.userType == "Accounting" ||
-        this.userType == "Purchasing" ||
-        this.userType == "Marketing")
-    ) {
+    } else if (path === "deliver" && (this.userType === "Admin" || this.userType === "Purchasing")) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
-    } else if (
-      path == "deliver" &&
-      (this.userType == "Admin" || this.userType == "Purchasing")
-    ) {
+    } else if (path === "documents" && this.userType === "Admin") {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
-    } else if (path == "documents" && this.userType == "Admin") {
+    } else if (path === "reports" && (this.userType === "Admin" || this.userType === "Accounting")) {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
-    } else if (
-      path == "reports" &&
-      (this.userType == "Admin" || this.userType == "Accounting")
-    ) {
-      this.router.navigate(["/admin/" + path]);
-      this.menu = path;
-    } else if (path == "user" && this.userType == "Admin") {
+    } else if (path === "user" && this.userType === "Admin") {
       this.router.navigate(["/admin/" + path]);
       this.menu = path;
     } else {
@@ -131,43 +119,43 @@ export class AdminComponent implements OnInit {
   }
 
   changeNavbar(url) {
-    if (url == "" || url == undefined || url == null) {
+    if (url === "" || url === undefined || url === null) {
       this.menu = "admin";
     }
 
-    if (url == "item") {
+    if (url === "item") {
       this.menu = "item";
     }
 
-    if (url == "deliver") {
+    if (url === "deliver") {
       this.menu = "deliver";
     }
 
-    if (url == "purchase") {
+    if (url === "purchase") {
       this.menu = "purchase";
     }
 
-    if (url == "clients") {
+    if (url === "clients") {
       this.menu = "clients";
     }
 
-    if (url == "user") {
+    if (url === "user") {
       this.menu = "user";
     }
 
-    if (url == "agent") {
+    if (url === "agent") {
       this.menu = "agent";
     }
 
-    if (url == "accounting") {
+    if (url === "accounting") {
       this.menu = "accounting";
     }
 
-    if (url == "documents") {
+    if (url === "documents") {
       this.menu = "documents";
     }
 
-    if (url == "reports") {
+    if (url === "reports") {
       this.menu = "reports";
     }
   }
