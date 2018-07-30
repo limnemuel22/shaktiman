@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 import { Router } from "@angular/router";
 import { Data } from "../../model/schema";
 
@@ -24,7 +24,7 @@ export class ClientslistComponent implements OnInit {
 
   constructor(
     private dbService: DatabaseService,
-    public global: Global,
+    public global: GlobalService,
     public router: Router,
     private formbuilder: FormBuilder
   ) {

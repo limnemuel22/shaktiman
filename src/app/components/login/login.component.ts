@@ -9,7 +9,7 @@ import { DatabaseService } from "../../services/database.service";
 import { User, Data } from "../../model/schema";
 import { Router } from "@angular/router";
 import { AuthGuard } from "../../guards/auth.guard";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 
 @Component({
   selector: "app-login",
@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit {
     private formbuilder: FormBuilder,
     private dbService: DatabaseService,
     private router: Router,
-    public global: Global,
+    public global: GlobalService,
     private authGuard: AuthGuard
   ) {
     this.dbService.loggedIn().subscribe(data => {

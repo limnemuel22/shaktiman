@@ -8,7 +8,7 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Purchase, Data } from "../../model/schema";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 
 @Component({
   selector: "app-deliveryreciept",
@@ -60,7 +60,7 @@ export class DeliveryrecieptComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private formbuilder: FormBuilder,
-    public global: Global,
+    public global: GlobalService,
     private router: Router
   ) {
     this.createForm();

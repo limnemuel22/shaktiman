@@ -3,7 +3,7 @@ import { DatabaseService } from "../../services/database.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Data } from "../../model/schema";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 
 @Component({
   selector: "app-delivery",
@@ -30,7 +30,7 @@ export class DeliveryComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private formbuilder: FormBuilder,
-    public global: Global,
+    public global: GlobalService,
     private router: Router
   ) {
     this.createForm();

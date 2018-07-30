@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
 import { Router } from "@angular/router";
 import { PlatformLocation } from "@angular/common";
-import { Global } from "../../modules/global";
+import { GlobalService } from "../../services/global.service";
 
 @Component({
   selector: "app-admin",
@@ -17,7 +17,7 @@ export class AdminComponent implements OnInit {
   constructor(
     private dbService: DatabaseService,
     private router: Router,
-    public global: Global,
+    public global: GlobalService,
     private location: PlatformLocation
   ) {
     this.dbService.get("user", localStorage.getItem("id")).subscribe(data => {
@@ -28,14 +28,11 @@ export class AdminComponent implements OnInit {
 
     this.location.onPopState(() => {
       setTimeout(() => {
-        // var path = this.router.url;
         const path = this.router.url;
         this.router.navigate([path]);
       }, 100);
     });
-
     this.router.events.subscribe(event => {
-      // var url = event["url"] === undefined ? "" : event["url"].replace("/admin", "").split("/")[1];
       const url = event["url"] === undefined ? "" : event["url"].replace("/admin", "").split("/")[1];
       this.changeNavbar(url);
     });
