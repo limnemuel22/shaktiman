@@ -16,15 +16,15 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Agent Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentName.errors && form.controls.agentName.dirty, 'has-success': form.controls.agentName.valid && form.controls.agentName.dirty }">
-            <input type="text" class="form-control" formControlName="agentName" [(ngModel)]="model.agentName" name="agentName">
+            <input type="text" class="form-control" formControlName="agentName" id="agentName">
             <!-- Validation -->
             <ul class="help-block">
-              <li *ngIf="form.controls.agentName.errors?.required && form.controls.agentName.dirty">
+              <li *ngIf="agentName?.hasError('required') && agentName?.dirty">
                 This field is required.</li>
-              <li *ngIf="form.controls.agentName.errors?.validateLetters && form.controls.agentName.dirty">
+              <li *ngIf="agentName?.hasError('validateLetters') && agentName?.dirty">
                 This field only accepts letters and no special characters.
               </li>
-              <li *ngIf="form.controls.agentName.errors?.minlength && form.controls.agentName.dirty">
+              <li *ngIf="agentName?.hasError('minlength') && agentName?.dirty">
                 Must be 8 characters long.
               </li>
             </ul>
@@ -36,11 +36,11 @@
               name="agentBirthday">
 
             <ul class="help-block">
-              <li *ngIf="form.controls.agentBirthday.errors?.validateDate && form.controls.agentBirthday.dirty">
+              <li *ngIf="agentBirthday?.hasError('validateDate') && agentBirthday?.dirty">
                 Invalid date format must be Month/Day/Year.
                 <br> Example : 01/01/2000.
               </li>
-              <li *ngIf="form.controls.agentBirthday.errors?.minlength && form.controls.agentBirthday.dirty">
+              <li *ngIf="agentBirthday?.hasError('minlength')  && agentBirthday?.dirty">
                 Must be 8 characters long.
               </li>
             </ul>

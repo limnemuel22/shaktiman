@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DatabaseService } from "../../services/database.service";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Agent, Data } from "../../model/schema";
-import { Router } from "@angular/router";
+import { FormGroup, Validators, FormControl } from "@angular/forms";
+import { Data } from "../../model/schema";
 
 @Component({
   selector: "app-agentadd",
@@ -24,24 +23,58 @@ export class AgentaddComponent implements OnInit {
   messageClass;
   userInvalid = false;
 
-  constructor(private dbService: DatabaseService, private formbuilder: FormBuilder, private router: Router) {
+  constructor(private dbService: DatabaseService) {
     this.createForm();
   }
 
   ngOnInit() {}
 
   createForm() {
-    this.form = this.formbuilder.group({
-      agentName: ["" /* Validators.compose([Validators.required,Validators.minLength(5),this.validateLetters]) */],
-      agentBirthday: ["", Validators.compose([Validators.maxLength(10), this.validateDate])],
-      agentAge: ["", Validators.compose([Validators.maxLength(20), this.validateAge])],
-      agentAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50), Validators.minLength(8)])],
-      agentContact: [
-        "",
-        Validators.compose([Validators.required, Validators.maxLength(11), Validators.minLength(11), this.validateContact])
-      ],
-      agentEmail: ["", Validators.compose([Validators.maxLength(100), Validators.minLength(11), this.validateEmail])]
+    this.form = new FormGroup({
+      agentName: new FormControl(this.model.agentName, [Validators.required, Validators.minLength(5), this.validateLetters]),
+      agentBirthday: new FormControl(this.model.agentBirthday, [Validators.maxLength(10), this.validateDate]),
+      agentAge: new FormControl(this.model.agentAge, [Validators.maxLength(20), this.validateAge]),
+      agentAddress: new FormControl(this.model.agentAddress, [
+        Validators.required,
+        Validators.maxLength(50),
+        Validators.minLength(8)
+      ]),
+      agentContact: new FormControl(this.model.agentContact, [
+        Validators.required,
+        Validators.maxLength(11),
+        Validators.minLength(11),
+        this.validateContact
+      ]),
+      agentEmail: new FormControl(this.model.agentEmail, [
+        Validators.maxLength(100),
+        Validators.minLength(11),
+        this.validateEmail
+      ])
     });
+  }
+
+  get agentName() {
+    return this.form.get("agentName");
+  }
+
+  get agentBirthday() {
+    return this.form.get("agentBirthday");
+  }
+
+  get agentAge() {
+    return this.form.get("agentAge");
+  }
+
+  get agentAddress() {
+    return this.form.get("agentAddress");
+  }
+
+  get agentContact() {
+    return this.form.get("agentContact");
+  }
+
+  get agentEmail() {
+    return this.form.get("agentEmail");
   }
 
   validateDate(controls) {
