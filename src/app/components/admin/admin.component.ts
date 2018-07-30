@@ -32,7 +32,6 @@ export class AdminComponent implements OnInit {
         this.router.navigate([path]);
       }, 100);
     });
-
     this.router.events.subscribe(event => {
       const url = event["url"] === undefined ? "" : event["url"].replace("/admin", "").split("/")[1];
       this.changeNavbar(url);

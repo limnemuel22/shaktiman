@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { AgenteditComponent } from './agentedit.component';
+import { AgenteditComponent } from "./agentedit.component";
 
-describe('AgenteditComponent', () => {
+describe("AgenteditComponent", () => {
   let component: AgenteditComponent;
   let fixture: ComponentFixture<AgenteditComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AgenteditComponent ]
-    })
-    .compileComponents();
+      declarations: [AgenteditComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('AgenteditComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
