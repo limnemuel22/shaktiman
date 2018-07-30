@@ -3,9 +3,9 @@ import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
-// Router
-import { HttpModule } from "@angular/http";
-import { AppRountingModule } from "./app-routing.module";
+// Http
+import { HttpClientModule } from "@angular/common/http";
+import { AppRountingModule } from "./modules/app-routing.module";
 
 // Services
 import { DatabaseService } from "./services/database.service";
@@ -121,7 +121,8 @@ import { PurchaseshowComponent } from "./components/purchaseshow/purchaseshow.co
     BrowserAnimationsModule,
     AppRountingModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   providers: [DatabaseService, AuthGuard, NotAuthGuard, Global],
   bootstrap: [AppComponent]
