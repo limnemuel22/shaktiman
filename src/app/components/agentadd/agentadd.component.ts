@@ -24,11 +24,7 @@ export class AgentaddComponent implements OnInit {
   messageClass;
   userInvalid = false;
 
-  constructor(
-    private dbService: DatabaseService,
-    private formbuilder: FormBuilder,
-    private router: Router
-  ) {
+  constructor(private dbService: DatabaseService, private formbuilder: FormBuilder, private router: Router) {
     this.createForm();
   }
 
@@ -36,58 +32,25 @@ export class AgentaddComponent implements OnInit {
 
   createForm() {
     this.form = this.formbuilder.group({
-      agentName: [
-        "" /* Validators.compose([Validators.required,Validators.minLength(5),this.validateLetters]) */
-      ],
-      agentBirthday: [
-        "",
-        Validators.compose([Validators.maxLength(10), this.validateDate])
-      ],
-      agentAge: [
-        "",
-        Validators.compose([Validators.maxLength(20), this.validateAge])
-      ],
-      agentAddress: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.maxLength(50),
-          Validators.minLength(8)
-        ])
-      ],
+      agentName: ["" /* Validators.compose([Validators.required,Validators.minLength(5),this.validateLetters]) */],
+      agentBirthday: ["", Validators.compose([Validators.maxLength(10), this.validateDate])],
+      agentAge: ["", Validators.compose([Validators.maxLength(20), this.validateAge])],
+      agentAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50), Validators.minLength(8)])],
       agentContact: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.maxLength(11),
-          Validators.minLength(11),
-          this.validateContact
-        ])
+        Validators.compose([Validators.required, Validators.maxLength(11), Validators.minLength(11), this.validateContact])
       ],
-      agentEmail: [
-        "",
-        Validators.compose([
-          Validators.maxLength(100),
-          Validators.minLength(11),
-          this.validateEmail
-        ])
-      ]
+      agentEmail: ["", Validators.compose([Validators.maxLength(100), Validators.minLength(11), this.validateEmail])]
     });
   }
 
   validateDate(controls) {
-    const regExp = new RegExp(
-      /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
-    );
+    const regExp = new RegExp(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/);
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
       // console.log(value[2])
-      if (
-        ((value[0] === "02" && value[1] === "31") ||
-          (value[0] === "02" && value[1] === "30")) &&
-        Number(value[2]) > 1900
-      ) {
+      if (((value[0] === "02" && value[1] === "31") || (value[0] === "02" && value[1] === "30")) && Number(value[2]) > 1900) {
         return { validateDate: true };
       } else {
         return null;
