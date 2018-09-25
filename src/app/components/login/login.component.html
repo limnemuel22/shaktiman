@@ -16,8 +16,8 @@
       <nav class="navbar navbar-fixed-top">
         <div class="container">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-              aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+              aria-expanded="false" aria-controls="navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -38,7 +38,7 @@
     </div>
 
     <!-- Login Form -->
-    <form [formGroup]="form" (submit)="onLoginSubmit()">
+    <form [formGroup]="form">
       <div class="col-md-4">
         <!-- Username Field -->
         <div class="form-group">
@@ -78,8 +78,8 @@
 
         <!-- Submit Button -->
         <!-- <button mat-button>Click me!</button> -->
-        <input mat-raised-button color="primary" [disabled]="!form.valid || processing" class="btn btn-primary btn-md" type="submit"
-          value="Login" />
+        <input mat-raised-button color="primary" [disabled]="!form.valid || processing" class="btn btn-primary btn-md"
+          type="submit" value="Login" (click)="onLoginSubmit()" />
       </div>
     </form>
   </div>

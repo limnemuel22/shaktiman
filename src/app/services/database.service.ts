@@ -44,9 +44,10 @@ export class DatabaseService {
   loggedIn() {
     const data = {
       function: "checkLogin",
-      User: localStorage.getItem("user"),
-      Token: localStorage.getItem("token")
+      username: localStorage.getItem("username"),
+      token: localStorage.getItem("token")
     };
+    console.log({ data: data, token: localStorage.getItem("token") });
 
     return this.http
       .post(this.conn, { data: data, token: localStorage.getItem("token") })
