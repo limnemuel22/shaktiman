@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
     this.dbService.loggedIn().subscribe(data => {
       if (!data) {
         this.isLogin = false;
+        localStorage.clear();
       } else {
         this.router.navigate(["admin"]);
       }
