@@ -47,7 +47,7 @@ export class DatabaseService {
       username: localStorage.getItem("username"),
       token: localStorage.getItem("token")
     };
-    console.log({ data: data, token: localStorage.getItem("token") });
+    //console.log({ data: data, token: localStorage.getItem("token") });
 
     return this.http
       .post(this.conn, { data: data, token: localStorage.getItem("token") })

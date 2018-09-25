@@ -38,7 +38,6 @@ export class LoginComponent implements OnInit {
       } else {
         this.router.navigate(["admin"]);
       }
-      console.log(!data);
     });
 
     this.createForm();
@@ -107,8 +106,7 @@ export class LoginComponent implements OnInit {
     this.processing = true;
     this.disableForm();
     this.data["function"] = "userLogin";
-
-    this.dbService.userLogin(this.data).subscribe((data: any) => {
+    /*  this.dbService.userLogin(this.data).subscribe((data: any) => {
       if (data.status === "error") {
         this.messageClass = "alert alert-danger";
         this.message = data.message;
@@ -127,6 +125,6 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/admin"]);
         }, 2000);
       }
-    });
+    }); */
   }
 }
