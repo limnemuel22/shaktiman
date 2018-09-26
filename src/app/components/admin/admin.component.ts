@@ -52,7 +52,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {}
 
   goTo(path) {
-    // console.log(this.userType);
     this.userType =
       this.userType === undefined ? this.global.usertype : this.userType;
     if (
@@ -127,7 +126,8 @@ export class AdminComponent implements OnInit {
   logout() {
     localStorage.removeItem("id");
     localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem("username");
+    localStorage.removeItem("usertype");
   }
 
   changeNavbar(url) {
