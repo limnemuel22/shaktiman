@@ -116,7 +116,8 @@ export class ItemaddComponent implements OnInit {
   addItem() {
     this.processing = true;
     this.model["function"] = "addItem";
-    this.dbService.post(this.model).subscribe((data: Data) => {
+
+  /*   this.dbService.post(this.model).subscribe((data: Data) => {
       if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
@@ -134,6 +135,6 @@ export class ItemaddComponent implements OnInit {
           this.message = "";
         }, 3000);
       }
-    });
+    }); */
   }
 }
