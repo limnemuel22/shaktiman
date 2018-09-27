@@ -21,7 +21,6 @@ export class AdminComponent implements OnInit {
     private location: PlatformLocation
   ) {
     this.dbService.get("user", localStorage.getItem("id")).subscribe(data => {
-      console.log(data);
       this.userType = this.global.usertype = data[0].usertype;
       this.global.employeeName = data[0].employeeName;
     });
@@ -39,14 +38,14 @@ export class AdminComponent implements OnInit {
           : event["url"].replace("/admin", "").split("/")[1];
       this.changeNavbar(url);
     });
-
+    /* 
     this.global.getPurchases();
     this.global.getItems();
     this.global.getUsers();
     this.global.getAgents();
     this.global.getPayments();
     this.global.getClients();
-    this.global.getPDF();
+    this.global.getPDF(); */
   }
 
   ngOnInit() {}

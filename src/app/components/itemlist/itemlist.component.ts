@@ -38,8 +38,10 @@ export class ItemlistComponent implements OnInit {
     "description",
     "action"
   ];
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
+  @ViewChild(MatSort)
+  sort: MatSort;
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -50,7 +52,7 @@ export class ItemlistComponent implements OnInit {
     private dbService: DatabaseService,
     public global: GlobalService,
     public router: Router,
-    private formbuilder: FormBuilder
+    private formbuilder: FormBuilder 
   ) {
     this.createForm();
     this.items = this.global.items === null ? null : this.global.items;
@@ -63,6 +65,7 @@ export class ItemlistComponent implements OnInit {
         clearInterval(getitems);
       }
     }, 1000);
+    console.log(getitems);
   }
 
   ngOnInit() {}

@@ -69,13 +69,26 @@ export class GlobalService {
       if (data.status === undefined) {
         this.payments = data;
         Object.entries(this.payments).forEach(([key, value]) => {
-          this.payments[key].amount = Number(value["amount"]).toLocaleString("en-us", { minimumFractionDigits: 2 });
-          this.payments[key].price = Number(value["price"]).toLocaleString("en-us", { minimumFractionDigits: 2 });
-          this.payments[key].discount = Number(value["discount"]).toLocaleString("en-us", { minimumFractionDigits: 2 });
-          this.payments[key].discountedPrice = Number(value["discountedPrice"]).toLocaleString("en-us", {
+          this.payments[key].amount = Number(value["amount"]).toLocaleString(
+            "en-us",
+            { minimumFractionDigits: 2 }
+          );
+          this.payments[key].price = Number(value["price"]).toLocaleString(
+            "en-us",
+            { minimumFractionDigits: 2 }
+          );
+          this.payments[key].discount = Number(
+            value["discount"]
+          ).toLocaleString("en-us", { minimumFractionDigits: 2 });
+          this.payments[key].discountedPrice = Number(
+            value["discountedPrice"]
+          ).toLocaleString("en-us", {
             minimumFractionDigits: 2
           });
-          this.payments[key].balance = Number(value["balance"]).toLocaleString("en-us", { minimumFractionDigits: 2 });
+          this.payments[key].balance = Number(value["balance"]).toLocaleString(
+            "en-us",
+            { minimumFractionDigits: 2 }
+          );
         });
       }
     });

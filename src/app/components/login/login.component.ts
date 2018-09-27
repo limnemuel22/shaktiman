@@ -106,7 +106,6 @@ export class LoginComponent implements OnInit {
     this.processing = true;
     this.disableForm();
     this.data["function"] = "userLogin";
-    console.log(this.data);
 
     this.dbService.userLogin(this.data).subscribe((data: any) => {
       if (data.status === "error") {
@@ -121,14 +120,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem("username", data.username);
         localStorage.setItem("token", data.token);
         localStorage.setItem("id", data.id);
-        localStorage.setItem("usertype", data.usertype);
         this.user = new User();
         setTimeout(() => {
           this.form.reset();
           this.router.navigate(["/admin"]);
         }, 2000);
       }
-      console.log(this.global.usertype);
     });
   }
 }
