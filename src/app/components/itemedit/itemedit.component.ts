@@ -24,6 +24,7 @@ export class ItemeditComponent implements OnInit {
   ) {
     this.createForm();
     this.getItem();
+    console.log(this.getItem);
   }
 
   ngOnInit() {}
@@ -111,6 +112,7 @@ export class ItemeditComponent implements OnInit {
       .get("item", this.route.snapshot.params["id"])
       .subscribe(data => {
         this.model = data[0];
+        console.log(this.model);
       });
   }
 
@@ -121,7 +123,6 @@ export class ItemeditComponent implements OnInit {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
-
         setTimeout(() => {
           this.form.reset();
           this.goBack();

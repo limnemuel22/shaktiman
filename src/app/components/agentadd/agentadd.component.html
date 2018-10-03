@@ -11,12 +11,12 @@
 
     <div class="panel-body">
 
-      <form [formGroup]="form" class="form-horizontal" (submit)="addAgent()">
+      <form [formGroup]="form" class="form-horizontal">
 
         <div class="form-group">
           <label class="col-sm-2 control-label">Agent Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentName.errors && form.controls.agentName.dirty, 'has-success': form.controls.agentName.valid && form.controls.agentName.dirty }">
-            <input type="text" class="form-control" formControlName="agentName" id="agentName">
+            <input type="text" class="form-control" formControlName="agentName" id="agentName" [(ngModel)]="model.agentName">
             <!-- Validation -->
             <ul class="help-block">
               <li *ngIf="agentName?.hasError('required') && agentName?.dirty">
@@ -32,8 +32,8 @@
 
           <label class="col-sm-2 control-label">Birthday :</label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentBirthday.errors && form.controls.agentBirthday.dirty, 'has-success': form.controls.agentBirthday.valid && form.controls.agentBirthday.dirty }">
-            <input type="text" class="form-control" placeholder="MM/DD/YYYY" formControlName="agentBirthday" [(ngModel)]="model.agentBirthday"
-              name="agentBirthday">
+            <input type="text" class="form-control" placeholder="MM/DD/YYYY" formControlName="agentBirthday"
+              [(ngModel)]="model.agentBirthday" name="agentBirthday">
 
             <ul class="help-block">
               <li *ngIf="agentBirthday?.hasError('validateDate') && agentBirthday?.dirty">
@@ -64,7 +64,8 @@
 
           <label class="col-sm-2 control-label">Address : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentAddress.errors && form.controls.agentAddress.dirty, 'has-success': form.controls.agentAddress.valid && form.controls.agentAddress.dirty }">
-            <input type="text" class="form-control" formControlName="agentAddress" [(ngModel)]="model.agentAddress" name="agentAddress">
+            <input type="text" class="form-control" formControlName="agentAddress" [(ngModel)]="model.agentAddress"
+              name="agentAddress">
             <ul class="help-block">
               <li *ngIf="form.controls.agentAddress.errors?.required && form.controls.agentAddress.dirty">
                 This field is required.
@@ -98,7 +99,8 @@
 
           <label class="col-sm-2 control-label">Contact No. : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agentContact.errors && form.controls.agentContact.dirty, 'has-success': form.controls.agentContact.valid && form.controls.agentContact.dirty }">
-            <input type="agentContact" class="form-control" formControlName="agentContact" [(ngModel)]="model.agentContact" name="agentContact">
+            <input type="agentContact" class="form-control" formControlName="agentContact" [(ngModel)]="model.agentContact"
+              name="agentContact">
             <ul class="help-block">
               <li *ngIf="form.controls.agentContact.errors?.required && form.controls.agentContact.dirty">
                 This field is required.
@@ -115,7 +117,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
-            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success">Save</button>
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" (click)="addAgent()">Save</button>&nbsp;&nbsp;
             <a class="btn btn-danger" (click)="Clear()">Clear</a>
           </div>
 

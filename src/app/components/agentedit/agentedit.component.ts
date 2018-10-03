@@ -151,12 +151,12 @@ export class AgenteditComponent implements OnInit {
 
   updateAgent() {
     this.model["function"] = "updateAgent";
+    console.table(this.model);
     this.dbService.post(this.model).subscribe((data: Data) => {
       if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
-
         setTimeout(() => {
           this.form.reset();
           this.goBack();

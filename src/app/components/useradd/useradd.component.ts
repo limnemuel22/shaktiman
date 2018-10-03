@@ -152,6 +152,9 @@ export class UseraddComponent implements OnInit {
     this.form.reset();
   }
 
+  goBack() {
+    this.router.navigate(["/admin/user/user-list"]);
+  }
   addUser() {
     this.processing = true;
     this.model.usertype = this.usertype;
@@ -163,6 +166,10 @@ export class UseraddComponent implements OnInit {
         this.message = data.message;
         this.processing = false;
         this.form.reset();
+        setTimeout(() => {
+          this.model = new User();
+          this.goBack();
+        }, 3000);
       } else {
         this.processing = false;
         if (data.status === "error") {
@@ -170,6 +177,10 @@ export class UseraddComponent implements OnInit {
           this.message = data.message;
           this.userInvalid = true;
           this.form.controls["username"].reset();
+          setTimeout(() => {
+            this.messageClass = "";
+            this.message = "";
+          }, 3000);
         } else {
           alert(data.message);
         }

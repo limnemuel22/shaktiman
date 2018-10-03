@@ -1,37 +1,38 @@
 <div class="container" id="content">
   <div class="panel panel-default">
-      <div class="panel-heading">Client Details Form : You can add Client </div>
+    <div class="panel-heading">Client Details Form : You can add Client </div>
 
-      <!-- MESSAGE ERROR || SUCCESS -->
-      <div class="row show-hide-message">
-        <div [ngClass]="messageClass">
-          {{ message }}
-        </div>
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
       </div>
+    </div>
 
-      <div class="panel-body">
-        <form [formGroup]="form" class="form-horizontal" (submit)="addClient()">
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Clients Name : </label>
-        <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientName.errors && form.controls.clientName.dirty, 'has-success': form.controls.clientName.valid && form.controls.clientName.dirty }">
-          <input type="text" class="form-control"  formControlName="clientName" [(ngModel)]="model.clientName" name="clientName">
+    <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Clients Name : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientName.errors && form.controls.clientName.dirty, 'has-success': form.controls.clientName.valid && form.controls.clientName.dirty }">
+            <input type="text" class="form-control" formControlName="clientName" [(ngModel)]="model.clientName" name="clientName">
             <!-- Validation -->
             <ul class="help-block">
-                <li *ngIf="form.controls.clientName.errors?.required && form.controls.clientName.dirty">
-                  This field is required.</li>
-                  <li *ngIf="form.controls.clientName.errors?.validateLetters && form.controls.clientName.dirty">
-                      This field only accepts letters and no special characters.
-                    </li>
+              <li *ngIf="form.controls.clientName.errors?.required && form.controls.clientName.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.clientName.errors?.validateLetters && form.controls.clientName.dirty">
+                This field only accepts letters and no special characters.
+              </li>
               <li *ngIf="form.controls.clientName.errors?.minlength && form.controls.clientName.dirty">
                 Must be 8 characters long.
               </li>
             </ul>
-        </div>
-      
-        <label class="col-sm-2 control-label">Contact No. : </label>
-        <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientContact.errors && form.controls.clientContact.dirty, 'has-success': form.controls.clientContact.valid && form.controls.clientContact.dirty }">
-          <input  type="clientContact" class="form-control" formControlName="clientContact" [(ngModel)]="model.clientContact" name="clientContact">
-          <ul class="help-block">
+          </div>
+
+          <label class="col-sm-2 control-label">Contact No. : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientContact.errors && form.controls.clientContact.dirty, 'has-success': form.controls.clientContact.valid && form.controls.clientContact.dirty }">
+            <input type="clientContact" class="form-control" formControlName="clientContact" [(ngModel)]="model.clientContact"
+              name="clientContact">
+            <ul class="help-block">
               <li *ngIf="form.controls.clientContact.errors?.required && form.controls.clientContact.dirty">
                 This field is required.
               </li>
@@ -39,52 +40,53 @@
                 Must be 11 Numbers Only.
               </li>
             </ul>
+          </div>
         </div>
-      </div>
-      
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Email Address : </label>
-        <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientEmail.errors && form.controls.clientEmail.dirty, 'has-success': form.controls.clientEmail.valid && form.controls.clientEmail.dirty }">
-          <input type="text" class="form-control" formControlName="clientEmail" [(ngModel)]="model.clientEmail" name="clientEmail">
-          <ul class="help-block">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Email Address : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.clientEmail.errors && form.controls.clientEmail.dirty, 'has-success': form.controls.clientEmail.valid && form.controls.clientEmail.dirty }">
+            <input type="text" class="form-control" formControlName="clientEmail" [(ngModel)]="model.clientEmail" name="clientEmail">
+            <ul class="help-block">
               <li *ngIf="form.controls.clientEmail.errors?.minlength && form.controls.clientEmail.dirty">
                 Must be 8 characters long.
               </li>
               <li *ngIf="form.controls.clientEmail.errors?.validateEmail && form.controls.clientEmail.dirty">
                 Must be Email Address Only
               </li>
-            
+
             </ul>
-        </div>
-    </div>
-     
-      <div class="form-group">
-          <label class="col-sm-2 control-label">Address : </label>
-          <div class="col-sm-8" [ngClass]="{'has-error': form.controls.clientAddress.errors && form.controls.clientAddress.dirty, 'has-success': form.controls.clientAddress.valid && form.controls.clientAddress.dirty }">
-            <input type="text" class="form-control" formControlName="clientAddress" [(ngModel)]="model.clientAddress" name="clientAddress">
-            <ul class="help-block">
-                <li *ngIf="form.controls.clientAddress.errors?.required && form.controls.clientAddress.dirty">
-                  This field is required.
-                </li>
-                <li *ngIf="form.controls.clientAddress.errors?.minlength && form.controls.clientAddress.dirty">
-                  Must be 8 characters long.
-                </li>
-              </ul>
           </div>
         </div>
-  
-       
-  
-      
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-8">
-          <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" >Save</button>
-          <a  class="btn btn-danger" (click)="Clear()">Clear</a>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Address : </label>
+          <div class="col-sm-8" [ngClass]="{'has-error': form.controls.clientAddress.errors && form.controls.clientAddress.dirty, 'has-success': form.controls.clientAddress.valid && form.controls.clientAddress.dirty }">
+            <input type="text" class="form-control" formControlName="clientAddress" [(ngModel)]="model.clientAddress"
+              name="clientAddress">
+            <ul class="help-block">
+              <li *ngIf="form.controls.clientAddress.errors?.required && form.controls.clientAddress.dirty">
+                This field is required.
+              </li>
+              <li *ngIf="form.controls.clientAddress.errors?.minlength && form.controls.clientAddress.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
+          </div>
         </div>
-       
-      </div>
-    </form>
-    
-      </div>
+
+
+
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" (click)="addClient()">Save</button>&nbsp;&nbsp;
+            <a class="btn btn-danger" (click)="Clear()">Clear</a>
+          </div>
+
+        </div>
+      </form>
+
     </div>
   </div>
+</div>

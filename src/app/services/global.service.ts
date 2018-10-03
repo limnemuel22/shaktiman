@@ -58,7 +58,9 @@ export class GlobalService {
 
   getUsers() {
     this.dbService.get("users", this.token).subscribe((data: Data) => {
+      // console.log(data);
       if (data.status === undefined) {
+        //console.log(this.users);
         this.users = data;
       }
     });

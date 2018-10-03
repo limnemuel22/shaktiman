@@ -10,11 +10,12 @@
     </div>
 
     <div class="panel-body">
-      <form [formGroup]="form" class="form-horizontal" (submit)="addUser()">
+      <form [formGroup]="form" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label">Employee Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.employeeName.errors && form.controls.employeeName.dirty, 'has-success': form.controls.employeeName.valid && form.controls.employeeName.dirty }">
-            <input type="text" class="form-control" formControlName="employeeName" [(ngModel)]="model.employeeName" name="employeeName">
+            <input type="text" class="form-control" formControlName="employeeName" [(ngModel)]="model.employeeName"
+              name="employeeName">
             <!-- Validation -->
             <ul class="help-block">
               <li *ngIf="form.controls.employeeName.errors?.required && form.controls.employeeName.dirty">
@@ -60,7 +61,8 @@
           </div>
           <label class="col-sm-2 control-label">User Type : </label>
           <div class="col-sm-3">
-            <a href="#" class="dropdown-toggle btn btn1 btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="dropdown-toggle btn btn1 btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">
               {{usertype}}
             </a>
             <ul class="dropdown-menu">
@@ -136,7 +138,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
-            <button [disabled]="!form.valid || processing" type="submit" mat-raised-button color="accent">Save</button>
+            <button [disabled]="!form.valid || processing" type="submit" mat-raised-button color="accent" (click)="addUser()">Save</button>&nbsp;&nbsp;
             <a mat-raised-button color="primary" style="background-color:#DC3545;" (click)="Clear()">Clear</a>
           </div>
 

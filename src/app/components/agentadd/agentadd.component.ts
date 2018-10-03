@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
 import { DatabaseService } from "../../services/database.service";
 import { FormGroup, Validators, FormControl } from "@angular/forms";
 import { Data } from "../../model/schema";
@@ -23,7 +24,7 @@ export class AgentaddComponent implements OnInit {
   messageClass;
   userInvalid = false;
 
-  constructor(private dbService: DatabaseService) {
+  constructor(private dbService: DatabaseService, private router: Router) {
     this.createForm();
   }
 
@@ -31,9 +32,19 @@ export class AgentaddComponent implements OnInit {
 
   createForm() {
     this.form = new FormGroup({
-      agentName: new FormControl(this.model.agentName, [Validators.required, Validators.minLength(5), this.validateLetters]),
-      agentBirthday: new FormControl(this.model.agentBirthday, [Validators.maxLength(10), this.validateDate]),
-      agentAge: new FormControl(this.model.agentAge, [Validators.maxLength(20), this.validateAge]),
+      agentName: new FormControl(this.model.agentName, [
+        Validators.required,
+        Validators.minLength(5),
+        this.validateLetters
+      ]),
+      agentBirthday: new FormControl(this.model.agentBirthday, [
+        Validators.maxLength(10),
+        this.validateDate
+      ]),
+      agentAge: new FormControl(this.model.agentAge, [
+        Validators.maxLength(20),
+        this.validateAge
+      ]),
       agentAddress: new FormControl(this.model.agentAddress, [
         Validators.required,
         Validators.maxLength(50),
@@ -78,12 +89,18 @@ export class AgentaddComponent implements OnInit {
   }
 
   validateDate(controls) {
-    const regExp = new RegExp(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/);
+    const regExp = new RegExp(
+      /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/
+    );
 
     if (regExp.test(controls.value)) {
       const value = controls.value.split("/");
       // console.log(value[2])
-      if (((value[0] === "02" && value[1] === "31") || (value[0] === "02" && value[1] === "30")) && Number(value[2]) > 1900) {
+      if (
+        ((value[0] === "02" && value[1] === "31") ||
+          (value[0] === "02" && value[1] === "30")) &&
+        Number(value[2]) > 1900
+      ) {
         return { validateDate: true };
       } else {
         return null;
@@ -147,15 +164,22 @@ export class AgentaddComponent implements OnInit {
     this.form.reset();
   }
 
+  goBack() {
+    this.router.navigate(["/admin/agent/agent-list"]);
+  }
   addAgent() {
     this.processing = true;
     this.model["function"] = "addAgent";
+    //console.table(this.model);
     this.dbService.post(this.model).subscribe((data: Data) => {
       if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
         this.processing = false;
-        this.form.reset();
+        setTimeout(() => {
+          this.form.reset();
+          this.goBack();
+        }, 2000);
       } else {
         this.processing = false;
         if (data.status === "error") {

@@ -12,11 +12,12 @@
 
 
     <div class="panel-body">
-      <form [formGroup]="form" class="form-horizontal" (submit)="updateUser()">
+      <form [formGroup]="form" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label">Employee Name : </label>
           <div class="col-sm-3">
-            <input type="text" class="form-control" formControlName="employeeName" [(ngModel)]="model.employeeName" name="employeeName">
+            <input type="text" class="form-control" formControlName="employeeName" [(ngModel)]="model.employeeName"
+              name="employeeName">
           </div>
           <label class="col-sm-2 control-label">Birthday : </label>
           <div class="col-sm-3">
@@ -31,7 +32,8 @@
           </div>
           <label class="col-sm-2 control-label">User Type : </label>
           <div class="col-sm-3">
-            <a href="#" class="dropdown-toggle btn btn1 btn-default" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <a href="#" class="dropdown-toggle btn btn1 btn-default" data-toggle="dropdown" role="button" aria-haspopup="true"
+              aria-expanded="false">
               {{usertype}}
             </a>
             <ul class="dropdown-menu">
@@ -57,7 +59,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
 
-            <button type="submit" mat-raised-button color="accent" style="background-color:rgb(24, 189, 3);">Update</button>
+            <button type="submit" mat-raised-button color="accent" style="background-color:rgb(24, 189, 3);" (click)="updateUser()">Update</button>
             <a mat-raised-button color="warn" (click)="goBack()">Cancel</a>
           </div>
 

@@ -28,7 +28,9 @@ export class UserlistComponent implements OnInit {
     private formbuilder: FormBuilder
   ) {
     this.createForm();
+    /* console.log(this.global.users); */
     this.users = this.global.users === null ? null : this.global.users;
+
     const getpurchase = setInterval(() => {
       this.users = this.global.users === null ? null : this.global.users;
       if (this.router.url !== "/admin/purchase/purchase-list") {

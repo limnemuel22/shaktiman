@@ -21,6 +21,7 @@ export class DatabaseService {
       id !== undefined
         ? this.conn + "?function=" + fun + "&token=" + this.token + "&id=" + id
         : this.conn + "?function=" + fun + "&token=" + this.token;
+    console.log(url);
     return this.http.get(url).pipe(catchError(this.handleError));
   }
 
@@ -55,6 +56,8 @@ export class DatabaseService {
   }
 
   userLogin(data) {
+    // console.log(data);
+    // console.log(this.conn);
     return this.http
       .post(this.conn, { data: data })
       .pipe(catchError(this.handleError));

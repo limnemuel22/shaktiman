@@ -1,127 +1,126 @@
 <div class="container">
   <div class="panel panel-default">
-      <div class="panel-heading">Add Item Form : You can add item details information here.</div>
-      
-       <!-- MESSAGE ERROR || SUCCESS -->
-   <div class="row show-hide-message">
-    <div [ngClass]="messageClass">
-      {{ message }}
-    </div>
-  </div>
+    <div class="panel-heading">Add Item Form : You can add item details information here.</div>
 
-      <div class="panel-body">
-        <form [formGroup]="form" class="form-horizontal" (submit)="updateItem()">
-      <div class="form-group">
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
+    <div class="panel-body">
+      <form [formGroup]="form" class="form-horizontal">
+        <div class="form-group">
           <label class="col-sm-2 control-label">Item Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.name.invalid && form.controls.name.dirty, 'has-success': form.controls.name.valid && form.controls.name.dirty }">
-            <input type="text" class="form-control"  formControlName="name" [(ngModel)]="model.name" name="name">
-              <!-- Validation -->
-              <ul class="help-block">
-                  <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">
-                    This field is required.</li>
-                    <li *ngIf="form.controls.name.errors?.validateLetterNumberSpecialChar && form.controls.name.dirty">
-                        This field only accepts letters and no special characters.
-                      </li>
-                <li *ngIf="form.controls.name.errors?.minlength && form.controls.name.dirty">
-                  Must be 8 characters long.
-                </li>
-              </ul>
+            <input type="text" class="form-control" formControlName="name" [(ngModel)]="model.name" name="name">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.name.errors?.validateLetterNumberSpecialChar && form.controls.name.dirty">
+                This field only accepts letters and no special characters.
+              </li>
+              <li *ngIf="form.controls.name.errors?.minlength && form.controls.name.dirty">
+                Must be 8 characters long.
+              </li>
+            </ul>
           </div>
-    
+
           <label class="col-sm-2 control-label">Price : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.price.invalid && form.controls.price.dirty, 'has-success': form.controls.price.valid && form.controls.price.dirty }">
-            <input type="text" class="form-control"  formControlName="price" [(ngModel)]="model.price" name="price">
-              <!-- Validation -->
-              <ul class="help-block">
-                  <li *ngIf="form.controls.price.errors?.required && form.controls.price.dirty">
-                    This field is required.</li>
-                    <li *ngIf="form.controls.price.errors?.validateNumber && form.controls.price.dirty">
-                        This field only accepts Decimal Numbers and no special characters.
-                      </li>
-                
-              </ul>
+            <input type="text" class="form-control" formControlName="price" [(ngModel)]="model.price" name="price">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.price.errors?.required && form.controls.price.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.price.errors?.validateNumber && form.controls.price.dirty">
+                This field only accepts Decimal Numbers and no special characters.
+              </li>
+
+            </ul>
           </div>
-    
-          
+
+
         </div>
         <div class="form-group">
-    
-            <label class="col-sm-2 control-label">Brand : </label>
-            <div class="col-sm-3" [ngClass]="{'has-error': form.controls.brand.invalid && form.controls.brand.dirty, 'has-success': form.controls.brand.valid && form.controls.brand.dirty }">
-              <input type="text" class="form-control"  formControlName="brand" [(ngModel)]="model.brand" name="brand">
-                <!-- Validation -->
-                <ul class="help-block">
-                    <li *ngIf="form.controls.brand.errors?.required && form.controls.brand.dirty">
-                      This field is required.</li>
-                      <li *ngIf="form.controls.brand.errors?.validateLetterNumberSpecialChar && form.controls.brand.dirty">
-                          This field only accepts Numbers and Letters .
-                        </li>
-                  
-                </ul>
-            </div>
-    
-            <label class="col-sm-2 control-label">Model : </label>
-            <div class="col-sm-3" [ngClass]="{'has-error': form.controls.model.invalid && form.controls.model.dirty, 'has-success': form.controls.model.valid && form.controls.model.dirty }">
-              <input type="text" class="form-control"  formControlName="model" [(ngModel)]="model.model" name="model">
-                <!-- Validation -->
-                <ul class="help-block">
-                    <li *ngIf="form.controls.model.errors?.required && form.controls.model.dirty">
-                      This field is required.</li>
-                      <li *ngIf="form.controls.model.errors?.validateLetterNumberSpecialChar && form.controls.model.dirty">
-                          This field only accepts Numbers and Letters .
-                        </li>
-                  
-                </ul>
-            </div>
-    
+
+          <label class="col-sm-2 control-label">Brand : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.brand.invalid && form.controls.brand.dirty, 'has-success': form.controls.brand.valid && form.controls.brand.dirty }">
+            <input type="text" class="form-control" formControlName="brand" [(ngModel)]="model.brand" name="brand">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.brand.errors?.required && form.controls.brand.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.brand.errors?.validateLetterNumberSpecialChar && form.controls.brand.dirty">
+                This field only accepts Numbers and Letters .
+              </li>
+
+            </ul>
+          </div>
+
+          <label class="col-sm-2 control-label">Model : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.model.invalid && form.controls.model.dirty, 'has-success': form.controls.model.valid && form.controls.model.dirty }">
+            <input type="text" class="form-control" formControlName="model" [(ngModel)]="model.model" name="model">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.model.errors?.required && form.controls.model.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.model.errors?.validateLetterNumberSpecialChar && form.controls.model.dirty">
+                This field only accepts Numbers and Letters .
+              </li>
+
+            </ul>
+          </div>
+
         </div>
-    
+
         <div class="form-group">
-    
-            <label class="col-sm-2 control-label">Item Code : </label>
-            <div class="col-sm-3" [ngClass]="{'has-error': form.controls.itemcode.invalid && form.controls.itemcode.dirty, 'has-success': form.controls.itemcode.valid && form.controls.itemcode.dirty }">
-              <input type="text" class="form-control"  formControlName="itemcode" [(ngModel)]="model.itemcode" name="itemcode">
-                <!-- Validation -->
-                <ul class="help-block">
-                    <li *ngIf="form.controls.itemcode.errors?.required && form.controls.itemcode.dirty">
-                      This field is required.</li>
-                      <li *ngIf="form.controls.itemcode.errors?.validateLetterNumberSpecialChar && form.controls.itemcode.dirty">
-                          This field only accepts Numbers and Letters .
-                        </li>
-                  
-                </ul>
-            </div>
-    
-            
-            
+
+          <label class="col-sm-2 control-label">Item Code : </label>
+          <div class="col-sm-3" [ngClass]="{'has-error': form.controls.itemcode.invalid && form.controls.itemcode.dirty, 'has-success': form.controls.itemcode.valid && form.controls.itemcode.dirty }">
+            <input type="text" class="form-control" formControlName="itemcode" [(ngModel)]="model.itemcode" name="itemcode">
+            <!-- Validation -->
+            <ul class="help-block">
+              <li *ngIf="form.controls.itemcode.errors?.required && form.controls.itemcode.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.itemcode.errors?.validateLetterNumberSpecialChar && form.controls.itemcode.dirty">
+                This field only accepts Numbers and Letters .
+              </li>
+
+            </ul>
+          </div>
+
+
+
         </div>
-    
+
         <div class="form-group">
-            <label class="col-sm-2 control-label">Description : </label>
-            <div class="col-sm-8" [ngClass]="{'has-error': form.controls.description.invalid && form.controls.description.dirty, 'has-success': form.controls.description.valid && form.controls.description.dirty }">
-              <textarea class="form-control" cols="30" rows="5" formControlName="description" [(ngModel)]="model.description" name="description"></textarea>
-              <ul class="help-block">
-                  <li *ngIf="form.controls.description.errors?.required && form.controls.description.dirty">
-                      This field is required.</li>
-                    <li *ngIf="form.controls.description.errors?.validateLetterNumberSpecialChar && form.controls.description.dirty">
-                      This field only accepts numbers, letters  and some basic special characters.
-                    </li>
-                
-              </ul>
-            </div>
+          <label class="col-sm-2 control-label">Description : </label>
+          <div class="col-sm-8" [ngClass]="{'has-error': form.controls.description.invalid && form.controls.description.dirty, 'has-success': form.controls.description.valid && form.controls.description.dirty }">
+            <textarea class="form-control" cols="30" rows="5" formControlName="description" [(ngModel)]="model.description"
+              name="description"></textarea>
+            <ul class="help-block">
+              <li *ngIf="form.controls.description.errors?.required && form.controls.description.dirty">
+                This field is required.</li>
+              <li *ngIf="form.controls.description.errors?.validateLetterNumberSpecialChar && form.controls.description.dirty">
+                This field only accepts numbers, letters and some basic special characters.
+              </li>
+
+            </ul>
+          </div>
         </div>
-  
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-8">
-          <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" >Save</button>
-          <a  class="btn btn-info" (click)="goBack()">Cancel</a>
+
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-8">
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" (click)="updateItem()">Save</button>&nbsp;&nbsp;
+            <a class="btn btn-info" (click)="goBack()">Cancel</a>
+          </div>
+
         </div>
-       
-      </div>
-    </form>
-    
-      </div>
+      </form>
+
     </div>
   </div>
-    
-  
+</div>

@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
 
     this.createForm();
     this.data = {
-      username: "",
-      password: ""
+      username: "metrolime",
+      password: "admin_nem"
     };
   }
 

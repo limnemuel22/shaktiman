@@ -127,6 +127,7 @@ export class UsereditComponent implements OnInit {
   updateUser() {
     this.model.usertype = this.usertype;
     this.model["function"] = "updateUser";
+
     this.dbService.post(this.model).subscribe((data: Data) => {
       if (data.status === "success") {
         this.messageClass = "alert alert-success";
