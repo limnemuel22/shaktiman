@@ -45,7 +45,7 @@ export class AdminComponent implements OnInit {
     this.global.getAgents();
     // this.global.getPayments();
     this.global.getClients();
-    this.global.getPDF();
+    //this.global.getPDF();
   }
 
   ngOnInit() {}

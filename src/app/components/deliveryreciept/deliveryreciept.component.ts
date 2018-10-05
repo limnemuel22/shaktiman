@@ -9,6 +9,7 @@ import {
 import { Router } from "@angular/router";
 import { Purchase, Data } from "../../model/schema";
 import { GlobalService } from "../../services/global.service";
+import { log } from "util";
 
 @Component({
   selector: "app-deliveryreciept",
@@ -201,6 +202,7 @@ export class DeliveryrecieptComponent implements OnInit {
     this.clientAddress = client.address;
     this.clientContact = client.contact;
     this.form.controls["client"].setErrors(null);
+    console.table(this.model.client);
   }
 
   people() {
@@ -279,11 +281,13 @@ export class DeliveryrecieptComponent implements OnInit {
       for (const key in this.clientName) {
         if (this.clientName.hasOwnProperty(key)) {
           const element = this.clientName[key];
+
           if (
             element.toLowerCase().substr(0, this.model.client.length) ===
             this.model.client.toLowerCase()
           ) {
             this.clientList.push(element);
+
             if (this.clientName[key] === this.model.client) {
               this.clientAddress = this.client[key].clientAddress;
               this.clientContact = this.client[key].clientContact;
@@ -380,7 +384,6 @@ export class DeliveryrecieptComponent implements OnInit {
     }
 
     localStorage.setItem("agent", JSON.stringify(name));
-    // console.log(this.agentList);
   }
   select(item, action) {
     if (action === "client") {
@@ -450,7 +453,6 @@ export class DeliveryrecieptComponent implements OnInit {
         }
       });
       this.serialNoList = duplicate;
-      // console.log(this.serialNoList);
     }
 
     if (action === "serial") {
@@ -494,13 +496,15 @@ export class DeliveryrecieptComponent implements OnInit {
                   serial: this.serialNo,
                   quantity: this.quantity
                 };
-
+                console.table(data);
                 this.dbService.post(data).subscribe((res: Data) => {
                   if (res.status === "error") {
                     this.messageClassItem = "alert alert-danger";
                     this.messageItem = res.message;
                   } else {
-                    this.addCart(data);
+                    console.log(res);
+                    this.addCart(res);
+
                     this.loadCart();
                     this.checkCart();
                     this.itemName = "";
@@ -694,5 +698,6 @@ export class DeliveryrecieptComponent implements OnInit {
     } else {
       this.hasQuantity = true;
     }
+    console.log(this.form.controls["quantity"].value.length);
   }
 }

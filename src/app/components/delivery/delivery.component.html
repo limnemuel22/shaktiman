@@ -1,14 +1,21 @@
 <div class="container" id="content">
   <div class="panel panel-default">
     <div class="panel-heading">Delivery Form : You can add delivery information here.</div>
+    <!-- MESSAGE ERROR || SUCCESS -->
+    <div class="row show-hide-message">
+      <div [ngClass]="messageClass">
+        {{ message }}
+      </div>
+    </div>
+
     <div class="panel-body">
-      <form [formGroup]="form" class="form-horizontal" (submit)="addDelivery()">
+      <form [formGroup]="form" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label">Item Name : </label>
 
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.item.errors && form.controls.item.dirty, 'has-success': form.controls.item.valid && form.controls.item.dirty }">
-            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="item" [(ngModel)]="model.item"
-              name="item" (keyup)=filterByItem()>
+            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="item"
+              [(ngModel)]="model.item" name="item" (keyup)=filterByItem()>
             <ul class="help-block">
               <li *ngIf="form.controls.item.errors?.required && form.controls.item.dirty">
                 This field is required.</li>
@@ -149,7 +156,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
-            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success">Save</button>
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" (click)="addDelivery()">Save</button>&nbsp;&nbsp;
             <a class="btn btn-info" (click)="goBack()">Cancel</a>
           </div>
 

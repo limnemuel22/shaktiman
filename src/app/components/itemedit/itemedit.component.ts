@@ -112,7 +112,7 @@ export class ItemeditComponent implements OnInit {
       .get("item", this.route.snapshot.params["id"])
       .subscribe(data => {
         this.model = data[0];
-        console.log(this.model);
+        // console.log(this.model);
       });
   }
 

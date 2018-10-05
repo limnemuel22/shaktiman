@@ -9,14 +9,14 @@
         </div>
       </div>
 
-      <form [formGroup]="form" class="form-horizontal" (submit)="saveDR()">
+      <form [formGroup]="form" class="form-horizontal">
 
         <div class="form-group">
           <label class="col-sm-2 control-label">Client Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.client.errors && form.controls.client.dirty, 'has-success': form.controls.client.valid && form.controls.client.dirty }">
 
-            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="client" [(ngModel)]="model.client"
-              name="client" (keyup)=filterByClient() autocomplete="off">
+            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="client"
+              [(ngModel)]="model.client" name="client" (keyup)=filterByClient() autocomplete="off">
 
             <!-- Dropdown -->
             <div class="dropdown-menu" *ngIf="clientList.length > 0">
@@ -51,7 +51,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Agent Name : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.agent.errors && form.controls.agent.dirty, 'has-success': form.controls.agent.valid && form.controls.agent.dirty }">
-            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="agent" [(ngModel)]="model.agent" name="agent" (keyup)=filterByAgent() autocomplete="off">
+            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="agent"
+              [(ngModel)]="model.agent" name="agent" (keyup)=filterByAgent() autocomplete="off">
 
             <!-- DROPDOWN SUGGESTION -->
             <div class="dropdown-menu" *ngIf="agentList.length > 0">
@@ -94,8 +95,8 @@
           <label class="col-sm-2 control-label">Item Name : </label>
           <div class="col-sm-8" [ngClass]="{'has-error': form.controls.itemName.errors && form.controls.itemName.dirty, 'has-success': form.controls.itemName.valid && form.controls.itemName.dirty }">
 
-            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="itemName" [(ngModel)]="itemName"
-              name="itemName" (change)="clear()" (keyup)="filterByItem()" autocomplete="off">
+            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="itemName"
+              [(ngModel)]="itemName" name="itemName" (change)="clear()" (keyup)="filterByItem()" autocomplete="off">
 
             <!-- DROPDOWN SUGGESTION -->
             <div class="dropdown-menu" *ngIf="itemNameList.length > 0">
@@ -118,8 +119,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Serial No. : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.serialNo.errors && form.controls.serialNo.dirty, 'has-success': form.controls.serialNo.valid && form.controls.serialNo.dirty }">
-            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="serialNo" [(ngModel)]="serialNo"
-              name="serialNo" (keyup)=filterBySerial() autocomplete="off">
+            <input class="dropdown-toggle" data-toggle="dropdown" type="text" class="form-control" formControlName="serialNo"
+              [(ngModel)]="serialNo" name="serialNo" (keyup)=filterBySerial() autocomplete="off">
 
             <!-- DROPDOWN SUGGESTION -->
             <div class="dropdown-menu" *ngIf="serialNoList.length > 0">
@@ -141,7 +142,8 @@
           <label class="col-sm-2 control-label">Quantity : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.quantity.errors && form.controls.quantity.dirty, 'has-success': form.controls.quantity.valid && form.controls.quantity.dirty }">
             <div class="col-sm-8" style="padding-left:0;">
-              <input type="text" class="form-control" formControlName="quantity" [(ngModel)]="quantity" name="quantity" (click)=checkQuantity() (keyup)=checkQuantity()>
+              <input type="text" class="form-control" formControlName="quantity" [(ngModel)]="quantity" name="quantity"
+                (click)=checkQuantity() (keyup)=checkQuantity()>
             </div>
             <a [class.disabled]="hasQuantity || form.controls.quantity.errors " class="btn btn-success" (click)=addItem()>
               <i class="fa fa-plus"></i> Add</a>
@@ -170,7 +172,8 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Approved By : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.approved.errors && form.controls.approved.dirty, 'has-success': form.controls.approved.valid && form.controls.approved.dirty }">
-            <input type="text" class="form-control" formControlName="approved" [(ngModel)]="approved" name="approved" (keyup)= "updateApproved()">
+            <input type="text" class="form-control" formControlName="approved" [(ngModel)]="approved" name="approved"
+              (keyup)="updateApproved()">
 
             <!-- Validation -->
             <ul class="help-block">
@@ -185,8 +188,8 @@
           <label class="col-sm-2 control-label">Date :</label>
           <div class="col-sm-3">
             <mat-form-field>
-              <input matInput [matDatepicker]="picker" [(ngModel)]="model.date" placeholder="Choose a date" class="form-control" formControlName="date"
-                name="date">
+              <input matInput [matDatepicker]="picker" [(ngModel)]="model.date" placeholder="Choose a date" class="form-control"
+                formControlName="date" name="date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -244,7 +247,7 @@
         <div class="form-group">
           <div class="col-sm-offset-1 col-sm-8">
             <button [disabled]="!form.valid || processing || hasItem" type="submit" class="btn btn-success">Save</button>
-            <a class="btn btn-danger" (click)="clearAll()">Clear</a>
+            <a class="btn btn-danger" (click)="clearAll()" (click)="saveDR()">Clear</a>
           </div>
         </div>
       </form>
