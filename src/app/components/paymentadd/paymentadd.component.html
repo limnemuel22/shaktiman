@@ -1,6 +1,6 @@
 <div class="container" id="content">
   <div class="panel panel-default">
-    <div class="panel-heading">Payment Form : You can search DR and add payemnt in here.</div>
+    <div class="panel-heading">Payment Form : You can search DR and add payment in here.</div>
 
     <!-- MESSAGE ERROR || SUCCESS -->
     <div class="row show-hide-message">
@@ -10,7 +10,7 @@
     </div>
 
     <div class="panel-body">
-      <form [formGroup]="form" class="form-horizontal" (submit)="addPayment()">
+      <form [formGroup]="form" class="form-horizontal">
 
         <div class="form-group">
           <label class="col-sm-2 control-label">D.R. Number : </label>
@@ -114,7 +114,7 @@
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
-            <button [disabled]="!form.valid || drStatus" type="submit" class="btn btn-success">Save</button>
+            <button [disabled]="!form.valid || drStatus" type="submit" class="btn btn-success" (click)="addPayment()">Save</button>&nbsp;&nbsp;
             <a class="btn btn-danger" (click)="Clear()">Clear</a>
           </div>
 

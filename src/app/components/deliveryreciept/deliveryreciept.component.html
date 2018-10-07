@@ -246,8 +246,8 @@
         <hr>
         <div class="form-group">
           <div class="col-sm-offset-1 col-sm-8">
-            <button [disabled]="!form.valid || processing || hasItem" type="submit" class="btn btn-success">Save</button>
-            <a class="btn btn-danger" (click)="clearAll()" (click)="saveDR()">Clear</a>
+            <button [disabled]="!form.valid || processing || hasItem" type="submit" class="btn btn-success" (click)="saveDR()">Save</button>&nbsp;&nbsp;
+            <a class="btn btn-danger" (click)="clearAll()">Clear</a>
           </div>
         </div>
       </form>

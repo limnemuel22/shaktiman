@@ -72,6 +72,7 @@ export class DiscountComponent implements OnInit {
         field: this.field
       };
 
+      console.log(input);
       this.dbService.post(input).subscribe((data: any) => {
         if (data.status !== "error") {
           for (const p of data) {

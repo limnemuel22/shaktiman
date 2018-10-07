@@ -205,6 +205,7 @@ export class PaymentaddComponent implements OnInit {
     };
 
     this.dbService.post(data).subscribe((res: Data) => {
+      console.table(res);
       if (res.status === "error") {
         this.messageClass = "alert alert-danger";
         this.message = res.message;

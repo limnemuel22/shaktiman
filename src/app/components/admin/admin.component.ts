@@ -39,13 +39,13 @@ export class AdminComponent implements OnInit {
       this.changeNavbar(url);
     });
 
-    /* this.global.getPurchases(); */
+    this.global.getPurchases();
     this.global.getItems();
     this.global.getUsers();
     this.global.getAgents();
-    // this.global.getPayments();
+    this.global.getPayments();
     this.global.getClients();
-    //this.global.getPDF();
+    this.global.getPDF();
   }
 
   ngOnInit() {}

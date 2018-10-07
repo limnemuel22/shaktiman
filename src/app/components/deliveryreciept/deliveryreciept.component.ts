@@ -660,19 +660,24 @@ export class DeliveryrecieptComponent implements OnInit {
     };
 
     this.dbService.post(info).subscribe((data: Data) => {
+      /*   console.table(info); */
       if (data.status === "success") {
         this.messageClass = "alert alert-success";
         this.message = data.message;
+        this.processing = false;
         setTimeout(() => {
           this.clearAll();
           this.global.getPurchases();
           this.router.navigate(["/admin/purchase/purchase-list"]);
-          alert(data.message);
         }, 2000);
       } else {
         this.processing = true;
-        this.messageClass = "alert alert-danger";
-        this.message = data.message;
+        if (data.status === "error") {
+          this.messageClass = "alert alert-danger";
+          this.message = data.message;
+        } else {
+          alert(data.message);
+        }
       }
     });
   }
@@ -698,6 +703,5 @@ export class DeliveryrecieptComponent implements OnInit {
     } else {
       this.hasQuantity = true;
     }
-    console.log(this.form.controls["quantity"].value.length);
   }
 }

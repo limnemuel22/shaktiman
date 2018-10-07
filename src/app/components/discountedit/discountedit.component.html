@@ -10,11 +10,11 @@
     </div>
 
     <div class="panel-body">
-      <form [formGroup]="form" class="form-horizontal" (submit)="updateDiscount()">
+      <form [formGroup]="form" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label">Special Discount : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.discount.invalid && form.controls.discount.dirty, 'has-success': form.controls.discount.valid && form.controls.discount.dirty }">
-            <input type="text" class="form-control" formControlName="discount" [(ngModel)]="model.discount" discount="discount" >
+            <input type="text" class="form-control" formControlName="discount" [(ngModel)]="model.discount" discount="discount">
             <!-- Validation -->
             <ul class="help-block">
               <li *ngIf="form.controls.discount.errors?.required && form.controls.discount.dirty">
@@ -30,7 +30,8 @@
 
           <label class="col-sm-2 control-label">Agent Commission : </label>
           <div class="col-sm-3" [ngClass]="{'has-error': form.controls.commission.errors && form.controls.commission.dirty, 'has-success': form.controls.commission.valid && form.controls.commission.dirty }">
-            <input type="text" class="form-control" formControlName="commission" [(ngModel)]="model.commission" discount="commission">
+            <input type="text" class="form-control" formControlName="commission" [(ngModel)]="model.commission"
+              discount="commission">
             <!-- Validation -->
             <ul class="help-block">
               <li *ngIf="form.controls.commission.errors?.required && form.controls.commission.dirty">
@@ -46,13 +47,14 @@
         <div class="form-group">
           <label class="col-sm-2 control-label">Remarks : </label>
           <div class="col-sm-8">
-            <textarea class="form-control" cols="30" rows="5" formControlName="remarks" [(ngModel)]="model.remarks" discount="remarks"></textarea>
+            <textarea class="form-control" cols="30" rows="5" formControlName="remarks" [(ngModel)]="model.remarks"
+              discount="remarks"></textarea>
           </div>
         </div>
 
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-8">
-            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success">Save</button>
+            <button [disabled]="!form.valid || processing" type="submit" class="btn btn-success" (click)="updateDiscount()">Save</button>&nbsp;&nbsp;
             <a class="btn btn-info" (click)="goBack()">Cancel</a>
           </div>
 

@@ -115,7 +115,7 @@ export class ItemlistComponent implements OnInit {
       };
       // console.log(input);
       this.dbService.post(input).subscribe((data: Data) => {
-        console.log(data);
+        console.log(input);
         if (data.status !== "error") {
           // console.log(this.transactions);
           this.items = this.global.items = data;

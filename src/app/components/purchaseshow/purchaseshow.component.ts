@@ -35,17 +35,19 @@ export class PurchaseshowComponent implements OnInit {
     this.getInvoice();
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   getInvoice() {
-
     this.dbService.get("drDetails", this.id).subscribe(data => {
-
       if (data[0].id != null) {
         this.message = true;
         this.data = data;
-        this.data[0].amount = Number(data[0].amount).toLocaleString("en-us", {minimumFractionDigits: 2});
-        this.total = Number(data[0].total).toLocaleString("en-us", {minimumFractionDigits: 2});
+        this.data[0].amount = Number(data[0].amount).toLocaleString("en-us", {
+          minimumFractionDigits: 2
+        });
+        this.total = Number(data[0].total).toLocaleString("en-us", {
+          minimumFractionDigits: 2
+        });
       }
     });
   }

@@ -11,12 +11,12 @@
       <div class="row">
         <div class="col-sm-12" style="margin-top:10px;">
           <div class="col-sm-6">
-            <input type="submit" class="form-control" type="text" name="search" [(ngModel)]="search" formControlName="search" placeholder="*Search {{filterby}}"
-            />
+            <input type="submit" class="form-control" type="text" name="search" [(ngModel)]="search" formControlName="search"
+              placeholder="*Search {{filterby}}" />
           </div>
           <div class="col-sm-2">
-            <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;" data-toggle="dropdown"
-              role="button" aria-haspopup="true" aria-expanded="false">
+            <a id="search" href="#" class="dropdown-toggle btn btn btn-default" style="width:100%; margin:0;"
+              data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               {{caption}}
             </a>
             <ul class="dropdown-menu">
@@ -45,8 +45,8 @@
     </div>
   </form>
 
-  <mat-expansion-panel style="margin-bottom:20px;" [style.background-color]="'#222'" [expanded]="!panelOpenState" (opened)="panelOpenState = false"
-    (closed)="panelOpenState = true">
+  <mat-expansion-panel style="margin-bottom:20px;" [style.background-color]="'#222'" [expanded]="!panelOpenState"
+    (opened)="panelOpenState = false" (closed)="panelOpenState = true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Item List
@@ -65,17 +65,20 @@
               <a class="btn btn-success" style=" width:100%; margin:0px;" (click)="downLoadPDF()">Print</a>
             </div>
           </div> -->
-          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
+          <mat-paginator #paginator [pageSize]="2" [pageSizeOptions]="[2,50, 100]"></mat-paginator>
 
-          <mat-table [style.min-height]="message == '' ? '450px' : '48px'" *ngIf="!hasLoaded" #table [dataSource]="dataSource" matSort>
+          <mat-table [style.min-height]="message == '' ? '450px' : '48px'" *ngIf="!hasLoaded" #table [dataSource]="dataSource"
+            matSort>
 
             <ng-container matColumnDef="no">
               <mat-header-cell style="max-width: 50px" *matHeaderCellDef mat-sort-header> No. </mat-header-cell>
-              <mat-cell class="cell" style="max-width: 50px" *matCellDef="let element; let i=index" (click)="openDialog(element.id)"> {{i+1}} </mat-cell>
+              <mat-cell class="cell" style="max-width: 50px" *matCellDef="let element; let i=index" (click)="openDialog(element.id)">
+                {{i+1}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="name">
-              <mat-header-cell style="max-width: 300px; min-width: 300px;" *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+              <mat-header-cell style="max-width: 300px; min-width: 300px;" *matHeaderCellDef mat-sort-header> Name
+              </mat-header-cell>
               <mat-cell class="cell" style="max-width: 300px;min-width: 300px;" *matCellDef="let element">
                 <span>{{element.name}} </span>
               </mat-cell>
@@ -87,8 +90,10 @@
             </ng-container>
 
             <ng-container matColumnDef="price">
-              <mat-header-cell style="max-width: 100px; min-width: 100px;text-align:right;" *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
-              <mat-cell class="cell text-right" style="max-width: 100px;min-width: 100px;" *matCellDef="let element"> {{element.price}} </mat-cell>
+              <mat-header-cell style="max-width: 100px; min-width: 100px;text-align:right;" *matHeaderCellDef
+                mat-sort-header> Price </mat-header-cell>
+              <mat-cell class="cell text-right" style="max-width: 100px;min-width: 100px;" *matCellDef="let element">
+                {{element.price}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="itemcode">
@@ -126,8 +131,7 @@
             <h2 class="message" style="margin: auto auto;">{{message}}</h2>
           </mat-toolbar>
           <!-- mat-pagination -->
-          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
-
+          <mat-paginator #paginator [pageSize]="2" [pageSizeOptions]="[2,50, 100]"></mat-paginator>
         </div>
       </div>
     </div>
