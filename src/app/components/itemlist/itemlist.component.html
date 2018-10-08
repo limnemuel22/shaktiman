@@ -65,7 +65,7 @@
               <a class="btn btn-success" style=" width:100%; margin:0px;" (click)="downLoadPDF()">Print</a>
             </div>
           </div> -->
-          <mat-paginator #paginator [pageSize]="2" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
+          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
 
           <mat-table [style.min-height]="message == '' ? '450px' : '48px'" *ngIf="!hasLoaded" #table [dataSource]="dataSource"
             matSort>
@@ -131,7 +131,7 @@
             <h2 class="message" style="margin: auto auto;">{{message}}</h2>
           </mat-toolbar>
           <!-- mat-pagination -->
-          <mat-paginator #paginator [pageSize]="2" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
+          <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[20,50, 100]"></mat-paginator>
         </div>
       </div>
     </div>
