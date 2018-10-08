@@ -201,10 +201,8 @@ export class DeliveryComponent implements OnInit {
   filterByItem() {
     if (this.model.item !== "") {
       this.itemNameList = [];
-      /*  console.log(this.itemNameList); */
 
       for (const key in this.itemList) {
-        /*   console.log(this.itemList); */
         if (this.itemList.hasOwnProperty(key)) {
           const element = this.itemList[key].name;
 

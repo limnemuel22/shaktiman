@@ -71,13 +71,12 @@ export class ClientslistComponent implements OnInit {
       const input = {
         value: this.search,
         function: "searchAll",
-        field: this.field
+        field: this.field,
+        table: "client"
       };
-      // console.log(input);
-      this.dbService.post(input).subscribe((data: Data) => {
-        // console.log(data);
+
+      this.dbService.post(input).subscribe((data: any) => {
         if (data.status !== "error") {
-          // console.log(this.transactions);
           this.clients = data;
         } else {
           this.messageClass = "alert alert-danger";

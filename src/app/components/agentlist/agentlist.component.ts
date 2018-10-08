@@ -69,7 +69,8 @@ export class AgentlistComponent implements OnInit {
       const input = {
         value: this.search,
         function: "searchAll",
-        field: this.field
+        field: this.field,
+        table: "agent"
       };
 
       this.dbService.post(input).subscribe((data: any) => {
